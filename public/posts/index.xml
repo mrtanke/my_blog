@@ -10,10 +10,17 @@
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Chain-of-Thought Prompting</title>
-      <link>http://localhost:1313/posts/my-first-post/</link>
+      <link>http://localhost:1313/posts/chain-of-thought-prompting/</link>
       <pubDate>Fri, 24 Oct 2025 13:58:55 +0200</pubDate>
-      <guid>http://localhost:1313/posts/my-first-post/</guid>
-      <description>Paper name: Chain-of-Thought Prompting Elicits Reasoning in Large Language Models</description>
+      <guid>http://localhost:1313/posts/chain-of-thought-prompting/</guid>
+      <description>Paper-reading notes: Chain-of-Thought Prompting Elicits Reasoning in Large Language Models</description>
+    </item>
+    <item>
+      <title>Mastering the game of Go with MCTS and Deep Neural Networks</title>
+      <link>http://localhost:1313/posts/mastering-go-mcts/</link>
+      <pubDate>Fri, 24 Oct 2025 10:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/mastering-go-mcts/</guid>
+      <description>Paper-reading notes: Mastering the game of Go with deep</description>
     </item>
   </channel>
 </rss>

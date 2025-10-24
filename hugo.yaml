@@ -3,6 +3,10 @@ languageCode: en-us
 title: Home
 theme: ["PaperMod"]
 
+# Only enable tags taxonomy. This prevents Hugo from generating category archive pages.
+taxonomies:
+  tag: "tags"
+
 enableInlineShortcodes: true
 enableRobotsTXT: true
 buildDrafts: false

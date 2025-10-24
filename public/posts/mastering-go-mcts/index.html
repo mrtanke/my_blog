@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Mastering the game of Go with MCTS and Deep Neural Networks | Home</title>
+<meta name="keywords" content="">
+<meta name="description" content="Paper-reading notes: Mastering the game of Go with deep">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/posts/mastering-go-mcts/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.9bb7abd44394c0e0d2cecd8ad4322626054cd3f5709a6d890d5a408efaf1fa90.css" integrity="sha256-m7er1EOUwODSzs2K1DImJgVM0/Vwmm2JDVpAjvrx&#43;pA=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/mastering-go-mcts/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" integrity="" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js" integrity="" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" integrity="" crossorigin="anonymous"></script>
+<script defer>
+  document.addEventListener("DOMContentLoaded", function() {
+    if (typeof renderMathInElement === 'function') {
+      renderMathInElement(document.body, {
+        
+        delimiters: [
+          {left: "$$", right: "$$", display: true},
+          {left: "\\[", right: "\\]", display: true},
+          {left: "$", right: "$", display: false},
+          {left: "\\(", right: "\\)", display: false}
+        ],
+        
+        throwOnError: false,
+        
+        ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      });
+    }
+  });
+</script>
+<meta property="og:url" content="http://localhost:1313/posts/mastering-go-mcts/">
+  <meta property="og:site_name" content="Home">
+  <meta property="og:title" content="Mastering the game of Go with MCTS and Deep Neural Networks">
+  <meta property="og:description" content="Paper-reading notes: Mastering the game of Go with deep">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-10-24T10:00:00+00:00">
+    <meta property="article:modified_time" content="2025-10-24T10:00:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mastering the game of Go with MCTS and Deep Neural Networks">
+<meta name="twitter:description" content="Paper-reading notes: Mastering the game of Go with deep">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Mastering the game of Go with MCTS and Deep Neural Networks",
+      "item": "http://localhost:1313/posts/mastering-go-mcts/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Mastering the game of Go with MCTS and Deep Neural Networks",
+  "name": "Mastering the game of Go with MCTS and Deep Neural Networks",
+  "description": "Paper-reading notes: Mastering the game of Go with deep",
+  "keywords": [
+    
+  ],
+  "articleBody": "Abstract The game of Go:\nThe most challenging of classic games for AI, because:\nEnormous search space The difficulty of evaluating board positions and moves Concept Meaning Example in Go AI Solution Enormous search space Too many possible moves and future paths → impossible to explore all At every turn, Go has ~250 legal moves; across 150 moves → (250^{150}) possibilities Policy network narrows down the choices (reduces breadth of search) Hard-to-evaluate positions Even if you know the board, it’s hard to know who’s winning Humans can’t easily assign a numeric score to a mid-game position Value network predicts win probability (reduces depth of search) AlphaGo 💡 Imagine AlphaGo is a smart player who has:\nintuition → from the policy network judgment → from the value network planning ability → from MCTS Integrating deep neural networks with Monte Carlo Tree Search (MCTS).\nThe main innovations include:\nTwo Neural Networks: Policy Network: Selects promising moves → the probability of each move. Value Network: Evaluates board positions → the likelihood of winning. Training Pipeline: Supervised Learning (SL) from expert human games to imitate professional play. Reinforcement Learning (RL) through self-play, improving beyond human strategies. Integration with MCTS: Combines the predictive power of neural networks with efficient search. Reduces: breadth (number of moves to consider) depth (number of steps to simulate) of search. 💡 MCTS It first adds all legal moves (children) under the current position in the tree. In every simulation, AlphaGo chooses one branch to go deeper into the tree (not all of them). It decides which one based on three main metrics: Policy Prior (P) → the probability of the move from policy network Visit Count (N) → how many times we’ve already explored this move during simulations. Q-Value (Q) → average win rate from past simulations Symbol Meaning Source Role in decision P(s,a) Policy prior (initial move probability) From policy network Guides initial exploration N(s,a) Number of times this move was explored Counted during simulations Balances exploration vs exploitation Q(s,a) Average predicted win rate (past experience) From value network results of simulations Exploitation: “keep doing what worked” Results:\nWithout search, AlphaGo already played at the level of strong Go programs. With the neural-network-guided MCTS, AlphaGo achieved a 99.8% win rate against other programs. It became the first program ever to defeat a human professional Go player (Fan Hui, European champion) by 5–0. Introduction Optimal value function $v^*(s)$ For any game state $s$, there exists a theoretical function that tells who will win if both players play perfectly. Computing this function exactly means searching through all possible sequences of moves. Search space explosion Total possibilities ≈ $b^d$, where $b$: number of legal moves (breadth), $d$: game length (depth). For Go: ( $b$ ≈ 250, $d$ ≈ 150) → bigggg number → impossible to compute exhaustively. Reducing the search space — two key principles: (1) Reduce depth using an approximate value function $v(s)$: Stop (truncate) deep search early. Use an approximate evaluator to predict how good a position is instead of exploring all future moves. This worked in chess, checkers, and Othello, but was believed to be impossible (“intractable”) for Go because Go’s positions are much more complex. (2) Reduce breadth using a policy $p(a|s)$: Instead of exploring all moves, only sample the most likely or promising ones. This narrows down which actions/moves to consider, saving enormous computation. Example: Monte Carlo rollouts: Simulate random games (using the policy) to estimate how good a position is. Maximum depth without branching at all, by sampling long sequences of actions for both players from a policy $p$. This method led to strong results in simpler games (backgammon, Scrabble), and weak amateur level in Go before AlphaGo. 💡 “Simulate” and “Roll out” basically mean the same thing in this context.\n“Simulate” → a general word: to play out an imaginary game in your head or computer. “Roll out” → a more specific term from Monte Carlo methods, meaning “play random moves from the current position until the game ends.” So → every rollout is one simulation of a complete (or partial) game.\nrollout = one simulated playthrough. Monte Carlo Rollout Monte Carlo rollout estimates how good a position is by:\nStarting from a given board position (s). Playing many simulated games to the end (using policy-guided moves → reduce breadth). Recording each game’s result (+1 for win, −1 for loss). Averaging all outcomes to estimate the win probability for that position. $$ v(s) \\approx \\text{average(win/loss results from rollouts)} $$\nGoal:\nApproximate the value function $v(s)$, the expected chance of winning from position $s$.\nIt’s simple but inefficient — great for small games, too slow and noisy for Go.\nMonte Carlo tree search MCTS uses Monte Carlo rollouts to estimate the value of each state. As more simulations are done, the search tree grows and values become more accurate. It can theoretically reach optimal play, but earlier Go programs used shallow trees and simple, hand-crafted policies or linear value functions (not deep learning). These older methods were limited because Go’s search space was too large. Training pipeline of AlphaGo 💡 Deep convolutional neural networks (CNNs) can represent board positions much better. So AlphaGo uses CNNs to reduce the search complexity in two ways: Evaluating positions with a value network → replaces long rollouts (reduces search depth). Sampling moves with a policy network → focuses on likely moves (reduces search breadth). Together, this lets AlphaGo explore much more efficiently than traditional MCTS. Supervised Learning (SL) Policy Network $p_\\sigma$: trained from human expert games. Fast Policy Network $p_\\pi$: used to quickly generate moves during rollouts. Reinforcement Learning (RL) Policy Network $p_\\rho$: improves the SL policy through self-play, optimizing for winning instead of just imitating humans. Value Network $v_\\theta$: predicts the winner from any board position based on self-play outcomes. Final AlphaGo system = combines policy + value networks inside MCTS for strong decision-making. Supervised learning of policy networks Panel(a): Better policy-network accuracy in predicting expert moves → stronger actual gameplay performance.\nThis proves that imitation learning (supervised policy $p_σ$) already provides meaningful playing ability before any reinforcement learning or MCTS.\nFast Rollout Policy networks 💡 $p_\\pi(a|s)$\nA simpler and faster version of the policy network used during rollouts in MCTS. Uses a linear softmax model on small board-pattern features (not deep CNN). Much lower accuracy (24.2 %) but extremely fast takes only 2 µs per move (vs. 3 ms for the full SL policy). Trained with the same supervised learning principle on human moves. Reinforcement learning of policy networks Structure of the policy network = SL policy network initial weights ρ = σ Step What happens What’s learned Initialize Copy weights from SL policy (ρ = σ) Start with human-like play Self-play Pick current p and an older version p Generate thousands of full games (self-play) Reward +1 for win, −1 for loss Label each move sequence, and collect experience (state, action, final reward) Update Update weights ρ by SGD Policy network Repeat Thousands of games Stronger, self-improving policy Reinforcement learning of value networks Step What happens What’s learned Initialize Start from the trained RL policy network; use it to generate self-play games Provides realistic, high-level gameplay data Self-play RL policy network plays millions of games against itself Produce diverse board positions and their final outcomes (+1 win / −1 loss) Sampling Randomly select one position per game to form 30 M independent (state, outcome) pairs Avoids correlation between similar positions Labeling Each position (s) labeled with the final game result (z) Links every board state to its real win/loss outcome Training Train the value network (v_θ(s)) by minimizing MSE Learns to predict winning probability directly from a position Evaluation Compare against Monte Carlo rollouts (pπ, pρ) Matches rollout accuracy with 15 000× less computation Result MSE ≈ 0.23 (train/test), strong generalization Reliable position evaluation for use in MCTS 💡 Problem of naive approach of predicting game outcomes from data consisting of complete games:\nThe value network was first trained on all positions from the same human games. Consecutive positions were almost identical and had the same win/loss label. The network memorized whole games instead of learning real position evaluation → overfitting (MSE = 0.37 test). Solution\nGenerate a new dataset: 30 million self-play games, take only one random position per game. Each sample is independent, so the network must learn general Go patterns, not memorize. Result: good generalization (MSE ≈ 0.23) and accurate position evaluation. Searching with policy and value networks (MCTS) ![image.png](./image 1.png)\nPanel Step What happens Which network helps a Selection Traverse the tree from root to a leaf by selecting the move with the highest combined score Q + u(P). Uses Q-values (average win) and policy priors P (from policy network). b Expansion When reaching a leaf (a position never explored before), expand it: generate its possible moves and initialize their prior probabilities using the policy network RL policy network c Evaluation Evaluate this new position in two ways: ① Value network (v_θ(s)): predicts win probability instantly. ② Rollout with fast policy p_π: quickly play random moves to the end, get final result (r). Value net + Fast policy d Backup Send the evaluation result (average of (v_θ(s)) and (r)) back up the tree — update each parent node’s Q-value (mean of all results from that branch). None directly (update step) The core idea Each possible move/edge (s, a) in the MCTS tree stores 3 key values:\nSymbol Meaning Source P(s,a) Prior probability — how promising this move looks before searching From the policy network N(s,a) How many times this move has been tried From search statistics Q(s,a) Average win rate from playing move a at state s From past simulations Step 1: Selection — choose which move to explore next At each step of a simulation, AlphaGo selects the move $a_t$ that maximizes:\n$$ a_t = \\arg\\max_a [Q(s_t, a) + u(s_t, a)] $$\nwhere the bonus term $u(s,a)$ encourages exploration:\n$$ u(s,a) \\propto \\frac{P(s,a)}{1 + N(s,a)} $$\n💡 $Q(s,a)$: “How good this move has proven so far.” $u(s,a)$: “How much we should still explore this move.” → Moves that are both good (high Q) and underexplored (low N) get priority.\nAs N increases, the bonus term shrinks — the search gradually focuses on the best moves.\nStep 2: Expansion When the search reaches a leaf (a position not yet in the tree):\nThe policy network $p_\\sigma(a|s)$ outputs a probability for each legal move. Those values are stored as new P(s,a) priors for the new node. Initially $N(s,a) = 0$ $Q(s,a) = 0$ Now the tree has grown — this new node represents a new possible future board.\nStep 3: Evaluation — estimate how good the leaf is Each leaf position $s_L$ is evaluated in two ways:\nValue network $v_θ(s_L)$: directly predicts win probability. Rollout result $z_L$: fast simulation (using the fast rollout policy $p_π$) until the game ends +1 if win −1 if loss. Then AlphaGo combines the two results:\n$$ V(s_L) = (1 - λ)v_θ(s_L) + λz_L $$\n$λ$ = mixing parameter (balances between value net and rollout). If $λ$ = 0.5, both count equally. Step 4: Backup — update the tree statistics The leaf’s evaluation $V(s_L)$ is propagated back up the tree:\nEvery move (edge) $(s, a)$ that was used to reach that leaf gets updated:\n$$ N(s,a) = \\sum_{i=1}^{n} 1(s,a,i) $$\n$$ Q(s,a) = \\frac{1}{N(s,a)} \\sum_{i=1}^{n} 1(s,a,i) V(s_L^i) $$\n💡 $1(s,a,i)$ = 1 if that move was part of the i-th simulation, else 0. $V(s_L^i)$ = evaluation result from that simulation’s leaf. So, Q(s,a) becomes the average value of all evaluations ( $r$ and $vθ$) in its subtree.\nStep 5: Final move decision After thousands of simulations, the root node has a set of moves with:\n$P(s_0, a)$: from policy network, $Q(s_0, a)$: average win rate, $N(s_0, a)$: visit counts. AlphaGo chooses the move with the highest visit count (N) — the most explored and trusted move.\n💡 Why SL policy network performed better than RL policy network for MCTS?\nPolicy Behavior Effect in MCTS SL policy Mimics human experts → gives a diverse set of good moves MCTS can explore several promising branches efficiently RL policy Optimized for winning → focuses too narrowly on top 1–2 moves MCTS loses diversity → gets less exploration benefit So, for MCTS’s exploration stage, a broader prior (SL policy) performs better.\nBut for value estimation, the RL value network is superior — because it predicts winning chances more accurately.\nImplementation detail Evaluating policy \u0026 value networks takes much more compute than classical search. AlphaGo used: 40 search threads, 48 CPUs, 8 GPUs for parallel evaluation. The final system ran asynchronous multi-threaded search: CPUs handle the tree search logic, GPUs compute policy and value network evaluations in parallel. This allowed AlphaGo to efficiently combine deep learning with massive search.\n💡 All programs were allowed 5 s of computation time per move.\nDiscussion In this work we have developed a Go program, based on a combination of deep neural networks and tree search. We have developed, for the first time, effective move selection and position evaluation functions for Go, based on deep neural networks that are trained by a novel combination of supervised and reinforcement learning. We have introduced a new search algorithm that successfully combines neural network evaluations with Monte Carlo rollouts. 💡 Our program AlphaGo integrates these components together, at scale, in a high-performance tree search engine.\nSelect those positions more intelligently, using the policy network, and evaluating them more precisely, using the value network. 💡 Policy network → “probability of choosing a move”\nValue network → “probability of winning from a position”\n",
+  "wordCount" : "2260",
+  "inLanguage": "en",
+  "datePublished": "2025-10-24T10:00:00Z",
+  "dateModified": "2025-10-24T10:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/mastering-go-mcts/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Home",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="Home (Alt + H)">Home</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Mastering the game of Go with MCTS and Deep Neural Networks
+    </h1>
+    <div class="post-description">
+      Paper-reading notes: Mastering the game of Go with deep
+    </div>
+    <div class="post-meta"><span title='2025-10-24 10:00:00 +0000 +0000'>October 24, 2025</span>&nbsp;·&nbsp;<span>2260 words</span>
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#abstract" aria-label="Abstract">Abstract</a><ul>
+                        
+                <li>
+                    <a href="#alphago" aria-label="AlphaGo">AlphaGo</a></li>
+                <li>
+                    <a href="#mcts" aria-label="MCTS">MCTS</a></li></ul>
+                </li>
+                <li>
+                    <a href="#introduction" aria-label="Introduction">Introduction</a><ul>
+                        
+                <li>
+                    <a href="#monte-carlo-rollout" aria-label="Monte Carlo Rollout">Monte Carlo Rollout</a></li>
+                <li>
+                    <a href="#monte-carlo-tree-search" aria-label="Monte Carlo tree search">Monte Carlo tree search</a><ul>
+                        
+                <li>
+                    <a href="#training-pipeline-of-alphago" aria-label="Training pipeline of AlphaGo">Training pipeline of AlphaGo</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#supervised-learning-of-policy-networks" aria-label="Supervised learning of policy networks">Supervised learning of policy networks</a><ul>
+                        
+                <li>
+                    <a href="#fast-rollout-policy-networks" aria-label="Fast Rollout Policy networks">Fast Rollout Policy networks</a></li></ul>
+                </li>
+                <li>
+                    <a href="#reinforcement-learning-of-policy-networks" aria-label="Reinforcement learning of policy networks">Reinforcement learning of policy networks</a></li>
+                <li>
+                    <a href="#reinforcement-learning-of-value-networks" aria-label="Reinforcement learning of value networks">Reinforcement learning of value networks</a></li>
+                <li>
+                    <a href="#searching-with-policy-and-value-networks-mcts" aria-label="Searching with policy and value networks (MCTS)">Searching with policy and value networks (MCTS)</a><ul>
+                        
+                <li>
+                    <a href="#the-core-idea" aria-label="The core idea">The core idea</a></li>
+                <li>
+                    <a href="#step-1-selection--choose-which-move-to-explore-next" aria-label="Step 1: Selection — choose which move to explore next">Step 1: Selection — choose which move to explore next</a></li>
+                <li>
+                    <a href="#step-2-expansion" aria-label="Step 2: Expansion">Step 2: Expansion</a></li>
+                <li>
+                    <a href="#step-3-evaluation--estimate-how-good-the-leaf-is" aria-label="Step 3: Evaluation — estimate how good the leaf is">Step 3: Evaluation — estimate how good the leaf is</a></li>
+                <li>
+                    <a href="#step-4-backup--update-the-tree-statistics" aria-label="Step 4: Backup — update the tree statistics">Step 4: Backup — update the tree statistics</a></li>
+                <li>
+                    <a href="#step-5-final-move-decision" aria-label="Step 5: Final move decision">Step 5: Final move decision</a></li>
+                <li>
+                    <a href="#implementation-detail" aria-label="Implementation detail">Implementation detail</a></li></ul>
+                </li>
+                <li>
+                    <a href="#discussion" aria-label="Discussion">Discussion</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h1 id="abstract">Abstract<a hidden class="anchor" aria-hidden="true" href="#abstract">#</a></h1>
+<p><strong>The game of Go:</strong></p>
+<p>The most challenging of classic games for AI, because:</p>
+<ul>
+<li>Enormous search space</li>
+<li>The difficulty of evaluating board positions and moves</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Concept</th>
+          <th>Meaning</th>
+          <th>Example in Go</th>
+          <th>AI Solution</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Enormous search space</strong></td>
+          <td>Too many possible moves and future paths → impossible to explore all</td>
+          <td>At every turn, Go has ~250 legal moves; across 150 moves → (250^{150}) possibilities</td>
+          <td><strong>Policy network</strong> narrows down the choices (reduces <em>breadth</em> of search)</td>
+      </tr>
+      <tr>
+          <td><strong>Hard-to-evaluate positions</strong></td>
+          <td>Even if you know the board, it’s hard to know who’s winning</td>
+          <td>Humans can’t easily assign a numeric score to a mid-game position</td>
+          <td><strong>Value network</strong> predicts win probability (reduces <em>depth</em> of search)</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="alphago"><strong>AlphaGo</strong><a hidden class="anchor" aria-hidden="true" href="#alphago">#</a></h2>
+<aside>
+💡
+<p>Imagine AlphaGo is a <em>smart player</em> who has:</p>
+<ul>
+<li><strong>intuition</strong> → from the <strong>policy network</strong></li>
+<li><strong>judgment</strong> → from the <strong>value network</strong></li>
+<li><strong>planning ability</strong> → from <strong>MCTS</strong></li>
+</ul>
+</aside>
+<p>Integrating <strong>deep neural networks</strong> with <strong>Monte Carlo Tree Search (MCTS)</strong>.</p>
+<p>The main innovations include:</p>
+<ol>
+<li><strong>Two Neural Networks</strong>:
+<ul>
+<li><strong>Policy Network</strong>: Selects promising moves → the probability of each move.</li>
+<li><strong>Value Network</strong>: Evaluates board positions → the likelihood of winning.</li>
+</ul>
+</li>
+<li><strong>Training Pipeline</strong>:
+<ul>
+<li><strong>Supervised Learning (SL)</strong> from expert human games to <strong>imitate</strong> professional play.</li>
+<li><strong>Reinforcement Learning (RL)</strong> through <strong>self-play</strong>, improving beyond human strategies.</li>
+</ul>
+</li>
+<li><strong>Integration with MCTS</strong>:
+<ul>
+<li>Combines the predictive power of neural networks with efficient search.</li>
+<li>Reduces:
+<ul>
+<li><strong>breadth</strong> (number of moves to consider)</li>
+<li><strong>depth</strong> (number of steps to simulate) of search.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<aside>
+💡
+<h2 id="mcts"><strong>MCTS</strong><a hidden class="anchor" aria-hidden="true" href="#mcts">#</a></h2>
+<ul>
+<li>It first <strong>adds all legal moves</strong> (children) under the current position in the <strong>tree</strong>.</li>
+<li>In every <strong>simulation</strong>, AlphaGo chooses <strong>one branch</strong> to go deeper into the tree (not all of them).</li>
+<li>It decides <strong>which one</strong> based on three main metrics:
+<ol>
+<li><strong>Policy Prior (P)</strong> → the probability of the move from policy network</li>
+<li><strong>Visit Count (N)</strong> → how many times we’ve already explored this move during simulations.</li>
+<li><strong>Q-Value (Q)</strong> → average win rate from past simulations</li>
+</ol>
+<table>
+  <thead>
+      <tr>
+          <th>Symbol</th>
+          <th>Meaning</th>
+          <th>Source</th>
+          <th>Role in decision</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>P(s,a)</strong></td>
+          <td>Policy prior (initial move probability)</td>
+          <td>From <strong>policy network</strong></td>
+          <td>Guides initial exploration</td>
+      </tr>
+      <tr>
+          <td><strong>N(s,a)</strong></td>
+          <td>Number of times this move was explored</td>
+          <td>Counted during simulations</td>
+          <td>Balances exploration vs exploitation</td>
+      </tr>
+      <tr>
+          <td><strong>Q(s,a)</strong></td>
+          <td>Average predicted win rate (past experience)</td>
+          <td>From <strong>value network</strong> results of simulations</td>
+          <td>Exploitation: “keep doing what worked”</td>
+      </tr>
+  </tbody>
+</table>
+</li>
+</ul>
+</aside>
+<p><strong>Results</strong>:</p>
+<ul>
+<li>Without search, AlphaGo already played at the level of strong Go programs.</li>
+<li>With the neural-network-guided MCTS, AlphaGo achieved a <strong>99.8% win rate</strong> against other programs.</li>
+<li>It became the <strong>first program ever to defeat a human professional Go player (Fan Hui, European champion)</strong> by <strong>5–0.</strong></li>
+</ul>
+<h1 id="introduction">Introduction<a hidden class="anchor" aria-hidden="true" href="#introduction">#</a></h1>
+<ol>
+<li><strong>Optimal value function $v^*(s)$</strong>
+<ul>
+<li>For any game state $s$, there exists a theoretical function that tells who will win if both players play perfectly.</li>
+<li>Computing this function exactly means searching through <em>all</em> possible sequences of moves.</li>
+</ul>
+</li>
+<li><strong>Search space explosion</strong>
+<ul>
+<li>Total possibilities ≈ $b^d$, where
+<ul>
+<li>$b$: number of legal moves (breadth),</li>
+<li>$d$: game length (depth).</li>
+</ul>
+</li>
+<li>For Go: ( $b$ ≈ 250, $d$ ≈ 150) → bigggg number → impossible to compute exhaustively.</li>
+</ul>
+</li>
+<li><strong>Reducing the search space</strong> — two key principles:
+<ul>
+<li><strong>(1) Reduce depth using an approximate value function $v(s)$:</strong>
+<ul>
+<li>Stop (truncate) deep search early.</li>
+<li>Use an <em>approximate evaluator</em> to predict how good a position is instead of exploring all future moves.</li>
+<li>This worked in chess, checkers, and Othello, but was believed to be impossible (“intractable”) for Go because Go’s positions are much more complex.</li>
+</ul>
+</li>
+<li><strong>(2) Reduce breadth using a policy $p(a|s)$:</strong>
+<ul>
+<li>Instead of exploring all moves, only sample the most likely or promising ones.</li>
+<li>This narrows down which actions/moves to consider, saving enormous computation.</li>
+<li>Example: <strong>Monte Carlo rollouts:</strong>
+<ul>
+<li>Simulate <strong>random games</strong> (using the policy) <strong>to estimate how good a position is</strong>.</li>
+<li>Maximum depth without branching at all, by sampling long sequences of actions for both players from a policy $p$.</li>
+<li>This method led to strong results in simpler games (backgammon, Scrabble), and weak amateur level in Go before AlphaGo.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<aside>
+💡
+<p>“Simulate” and “Roll out” basically mean the <strong>same thing</strong> in this context.</p>
+<ul>
+<li><strong>“Simulate”</strong> → a general word: to <em>play out</em> an imaginary game in your head or computer.</li>
+<li><strong>“Roll out”</strong> → a more specific term from <strong>Monte Carlo methods</strong>, meaning “play random moves from the current position until the game ends.”</li>
+</ul>
+<p>So → every rollout is one simulation of a complete (or partial) game.</p>
+<ul>
+<li><strong>rollout = one simulated playthrough.</strong></li>
+</ul>
+</aside>
+<h2 id="monte-carlo-rollout">Monte Carlo Rollout<a hidden class="anchor" aria-hidden="true" href="#monte-carlo-rollout">#</a></h2>
+<p><strong>Monte Carlo rollout</strong> estimates how good a position is by:</p>
+<ol>
+<li>Starting from a given board position (s).</li>
+<li>Playing many <strong>simulated games</strong> to the end (using policy-guided moves → reduce breadth).</li>
+<li>Recording each game’s result (+1 for win, −1 for loss).</li>
+<li>Averaging all outcomes to estimate the <strong>win probability</strong> for that position.</li>
+</ol>
+<p>$$
+v(s) \approx \text{average(win/loss results from rollouts)}
+$$</p>
+<p><strong>Goal:</strong></p>
+<p>Approximate the <strong>value function</strong> $v(s)$, the expected chance of winning from position $s$.</p>
+<p>It’s simple but inefficient — great for small games, too slow and noisy for Go.</p>
+<h2 id="monte-carlo-tree-search">Monte Carlo tree search<a hidden class="anchor" aria-hidden="true" href="#monte-carlo-tree-search">#</a></h2>
+<ul>
+<li>MCTS uses <strong>Monte Carlo rollouts</strong> to estimate the value of each state.</li>
+<li>As more simulations are done, the search tree grows and values become more accurate.</li>
+<li>It can theoretically reach <em>optimal play</em>,
+<ul>
+<li>but earlier Go programs used <strong>shallow trees</strong> and simple, hand-crafted <strong>policies</strong> or <strong>linear value functions</strong> (not deep learning).</li>
+</ul>
+</li>
+<li>These older methods were limited because Go’s search space was too large.</li>
+</ul>
+<h3 id="training-pipeline-of-alphago"><strong>Training pipeline of AlphaGo</strong><a hidden class="anchor" aria-hidden="true" href="#training-pipeline-of-alphago">#</a></h3>
+<aside>
+💡
+<ul>
+<li>Deep <strong>convolutional neural networks (CNNs)</strong> can represent board positions much better.</li>
+<li>So AlphaGo uses CNNs to <strong>reduce the search complexity</strong> in two ways:
+<ul>
+<li><strong>Evaluating positions with a value network</strong> → replaces long rollouts (reduces search <em>depth</em>).</li>
+<li><strong>Sampling moves with a policy network</strong> → focuses on likely moves (reduces search <em>breadth</em>).</li>
+</ul>
+</li>
+<li>Together, this lets AlphaGo explore much more efficiently than traditional MCTS.</li>
+</ul>
+</aside>
+<p><img alt="image.png" loading="lazy" src="./image.png"></p>
+<ol>
+<li><strong>Supervised Learning (SL) Policy Network $p_\sigma$</strong>:
+<ul>
+<li>trained from human expert games.</li>
+</ul>
+</li>
+<li><strong>Fast Policy Network $p_\pi$</strong>:
+<ul>
+<li>used to quickly generate moves during rollouts.</li>
+</ul>
+</li>
+<li><strong>Reinforcement Learning (RL) Policy Network $p_\rho$</strong>:
+<ul>
+<li>improves the SL policy through self-play, optimizing for <em>winning</em> instead of just imitating humans.</li>
+</ul>
+</li>
+<li><strong>Value Network $v_\theta$</strong>:
+<ul>
+<li>predicts the winner from any board position based on self-play outcomes.</li>
+</ul>
+</li>
+<li><strong>Final AlphaGo system</strong> = combines <strong>policy + value networks</strong> inside <strong>MCTS</strong> for strong decision-making.</li>
+</ol>
+<h1 id="supervised-learning-of-policy-networks">Supervised learning of policy networks<a hidden class="anchor" aria-hidden="true" href="#supervised-learning-of-policy-networks">#</a></h1>
+<p><img alt="image.png" loading="lazy" src="./c75e628a-863f-4e00-b4a5-43c3519b4fdd.png"></p>
+<p><strong>Panel(a)</strong>: Better <strong>policy-network accuracy</strong> in predicting expert moves → stronger actual gameplay performance.</p>
+<blockquote>
+<p>This proves that <strong>imitation learning (supervised policy $p_σ$)</strong> already provides meaningful playing ability before any reinforcement learning or MCTS.</p>
+</blockquote>
+<h2 id="fast-rollout-policy-networks"><strong>Fast Rollout Policy networks</strong><a hidden class="anchor" aria-hidden="true" href="#fast-rollout-policy-networks">#</a></h2>
+<aside>
+💡
+<p><strong>$p_\pi(a|s)$</strong></p>
+</aside>
+<ul>
+<li>A <strong>simpler and faster</strong> version of the policy network used during rollouts in <strong>MCTS</strong>.</li>
+<li>Uses a <strong>linear softmax model</strong> on small board-pattern features (not deep CNN).</li>
+<li>Much lower accuracy (<strong>24.2 %</strong>)
+<ul>
+<li>but <strong>extremely fast</strong></li>
+<li>takes only <strong>2 µs per move</strong> (vs. 3 ms for the full SL policy).</li>
+</ul>
+</li>
+<li>Trained with the same supervised learning principle on human moves.</li>
+</ul>
+<h1 id="reinforcement-learning-of-policy-networks">Reinforcement learning of policy networks<a hidden class="anchor" aria-hidden="true" href="#reinforcement-learning-of-policy-networks">#</a></h1>
+<ul>
+<li>Structure of the <strong>policy network</strong> = SL policy network
+<ul>
+<li>initial weights ρ = σ</li>
+</ul>
+</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>Step</th>
+          <th>What happens</th>
+          <th>What’s learned</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Initialize</td>
+          <td>Copy weights from SL policy (ρ = σ)</td>
+          <td>Start with human-like play</td>
+      </tr>
+      <tr>
+          <td>Self-play</td>
+          <td>Pick current p and an older version p</td>
+          <td>Generate thousands of full games (self-play)</td>
+      </tr>
+      <tr>
+          <td>Reward</td>
+          <td>+1 for win, −1 for loss</td>
+          <td>Label each move sequence, and collect experience (state, action, final reward)</td>
+      </tr>
+      <tr>
+          <td>Update</td>
+          <td>Update weights ρ by SGD</td>
+          <td>Policy network</td>
+      </tr>
+      <tr>
+          <td>Repeat</td>
+          <td>Thousands of games</td>
+          <td>Stronger, self-improving policy</td>
+      </tr>
+  </tbody>
+</table>
+<h1 id="reinforcement-learning-of-value-networks">Reinforcement learning of value networks<a hidden class="anchor" aria-hidden="true" href="#reinforcement-learning-of-value-networks">#</a></h1>
+<table>
+  <thead>
+      <tr>
+          <th>Step</th>
+          <th>What happens</th>
+          <th>What’s learned</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Initialize</td>
+          <td>Start from the trained RL policy network; use it to generate self-play games</td>
+          <td>Provides realistic, high-level gameplay data</td>
+      </tr>
+      <tr>
+          <td>Self-play</td>
+          <td>RL policy network plays millions of games against itself</td>
+          <td>Produce diverse board positions and their final outcomes (+1 win / −1 loss)</td>
+      </tr>
+      <tr>
+          <td>Sampling</td>
+          <td>Randomly select <strong>one position per game</strong> to form 30 M independent (state, outcome) pairs</td>
+          <td>Avoids correlation between similar positions</td>
+      </tr>
+      <tr>
+          <td>Labeling</td>
+          <td>Each position (s) labeled with the final game result (z)</td>
+          <td>Links every board state to its real win/loss outcome</td>
+      </tr>
+      <tr>
+          <td>Training</td>
+          <td>Train the value network (v_θ(s)) by minimizing MSE</td>
+          <td>Learns to predict winning probability directly from a position</td>
+      </tr>
+      <tr>
+          <td>Evaluation</td>
+          <td>Compare against Monte Carlo rollouts (pπ, pρ)</td>
+          <td>Matches rollout accuracy with 15 000× less computation</td>
+      </tr>
+      <tr>
+          <td>Result</td>
+          <td>MSE ≈ 0.23 (train/test), strong generalization</td>
+          <td>Reliable position evaluation for use in MCTS</td>
+      </tr>
+  </tbody>
+</table>
+<aside>
+💡
+<p><strong>Problem</strong> of naive approach of predicting game outcomes from data consisting of complete games:</p>
+<ul>
+<li>The value network was first trained on <strong>all positions from the same human games</strong>.</li>
+<li>Consecutive positions were <strong>almost identical</strong> and had the <strong>same win/loss label</strong>.</li>
+<li>The network <strong>memorized</strong> whole games instead of learning real position evaluation
+<ul>
+<li>→ <strong>overfitting</strong> (MSE = 0.37 test).</li>
+</ul>
+</li>
+</ul>
+<p><strong>Solution</strong></p>
+<ul>
+<li>Generate a <strong>new dataset</strong>:
+<ul>
+<li><strong>30 million self-play games</strong>, take <strong>only one random position per game</strong>.</li>
+</ul>
+</li>
+<li>Each sample is <strong>independent</strong>, so the network must learn <strong>general Go patterns</strong>, not memorize.</li>
+<li>Result: <strong>good generalization</strong> (MSE ≈ 0.23) and accurate position evaluation.</li>
+</ul>
+</aside>
+<h1 id="searching-with-policy-and-value-networks-mcts">Searching with policy and value networks (MCTS)<a hidden class="anchor" aria-hidden="true" href="#searching-with-policy-and-value-networks-mcts">#</a></h1>
+<p>![image.png](./image 1.png)</p>
+<table>
+  <thead>
+      <tr>
+          <th>Panel</th>
+          <th>Step</th>
+          <th>What happens</th>
+          <th>Which network helps</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>a</strong></td>
+          <td><strong>Selection</strong></td>
+          <td>Traverse the tree from root to a leaf by selecting the move with the highest combined score Q + u(P).</td>
+          <td>Uses <strong>Q-values</strong> (average win) and <strong>policy priors P</strong> (from policy network).</td>
+      </tr>
+      <tr>
+          <td><strong>b</strong></td>
+          <td><strong>Expansion</strong></td>
+          <td>When reaching a leaf (a position never explored before), expand it: generate its possible moves and initialize their prior probabilities using the <strong>policy network</strong></td>
+          <td><strong>RL policy network</strong></td>
+      </tr>
+      <tr>
+          <td><strong>c</strong></td>
+          <td><strong>Evaluation</strong></td>
+          <td>Evaluate this new position in two ways: ① <strong>Value network</strong> (v_θ(s)): predicts win probability instantly. ② <strong>Rollout</strong> with <strong>fast policy p_π</strong>: quickly play random moves to the end, get final result (r).</td>
+          <td><strong>Value net + Fast policy</strong></td>
+      </tr>
+      <tr>
+          <td><strong>d</strong></td>
+          <td><strong>Backup</strong></td>
+          <td>Send the evaluation result (average of (v_θ(s)) and (r)) back up the tree — update each parent node’s <strong>Q-value</strong> (mean of all results from that branch).</td>
+          <td>None directly (update step)</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="the-core-idea">The core idea<a hidden class="anchor" aria-hidden="true" href="#the-core-idea">#</a></h2>
+<p>Each possible move/edge (s, a) in the MCTS tree stores 3 key values:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Symbol</th>
+          <th>Meaning</th>
+          <th>Source</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>P(s,a)</strong></td>
+          <td><em>Prior probability</em> — how promising this move looks before searching</td>
+          <td>From the <strong>policy network</strong></td>
+      </tr>
+      <tr>
+          <td><strong>N(s,a)</strong></td>
+          <td>How many times this move has been tried</td>
+          <td>From search statistics</td>
+      </tr>
+      <tr>
+          <td><strong>Q(s,a)</strong></td>
+          <td>Average <em>win rate</em> from playing move <em>a</em> at state <em>s</em></td>
+          <td>From past simulations</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="step-1-selection--choose-which-move-to-explore-next">Step 1: <strong>Selection</strong> — choose which move to explore next<a hidden class="anchor" aria-hidden="true" href="#step-1-selection--choose-which-move-to-explore-next">#</a></h2>
+<p>At each step of a simulation, AlphaGo selects the move $a_t$ that maximizes:</p>
+<p>$$
+a_t = \arg\max_a [Q(s_t, a) + u(s_t, a)]
+$$</p>
+<p>where the <strong>bonus term</strong> $u(s,a)$ encourages exploration:</p>
+<p>$$
+u(s,a) \propto \frac{P(s,a)}{1 + N(s,a)}
+$$</p>
+<aside>
+💡
+<ul>
+<li>$Q(s,a)$: “How good this move has proven so far.”</li>
+<li>$u(s,a)$: “How much we <em>should still explore</em> this move.”</li>
+</ul>
+<p>→ Moves that are both <strong>good (high Q)</strong> and <strong>underexplored (low N)</strong> get priority.</p>
+<p>As N increases, the bonus term shrinks — the search gradually focuses on the best moves.</p>
+</aside>
+<h2 id="step-2-expansion">Step 2: <strong>Expansion</strong><a hidden class="anchor" aria-hidden="true" href="#step-2-expansion">#</a></h2>
+<p>When the search reaches a leaf (a position not yet in the tree):</p>
+<ul>
+<li>The <strong>policy network $p_\sigma(a|s)$</strong> outputs a probability for each legal move.
+<ul>
+<li>Those values are stored as new <strong>P(s,a)</strong> priors for the new node.</li>
+</ul>
+</li>
+<li>Initially
+<ul>
+<li>$N(s,a) = 0$</li>
+<li>$Q(s,a) = 0$</li>
+</ul>
+</li>
+</ul>
+<p>Now the tree has grown — this new node represents a new possible future board.</p>
+<h2 id="step-3-evaluation--estimate-how-good-the-leaf-is">Step 3: <strong>Evaluation</strong> — estimate how good the leaf is<a hidden class="anchor" aria-hidden="true" href="#step-3-evaluation--estimate-how-good-the-leaf-is">#</a></h2>
+<p>Each leaf position $s_L$ is evaluated in <strong>two ways</strong>:</p>
+<ol>
+<li><strong>Value network</strong> $v_θ(s_L)$: directly predicts win probability.</li>
+<li><strong>Rollout result</strong> $z_L$: fast simulation (using the fast rollout policy $p_π$) until the game ends
+<ul>
+<li>+1 if win</li>
+<li>−1 if loss.</li>
+</ul>
+</li>
+</ol>
+<p>Then AlphaGo combines the two results:</p>
+<p>$$
+V(s_L) = (1 - λ)v_θ(s_L) + λz_L
+$$</p>
+<ul>
+<li>$λ$ = mixing parameter (balances between value net and rollout).
+<ul>
+<li>If $λ$ = 0.5, both count equally.</li>
+</ul>
+</li>
+</ul>
+<h2 id="step-4-backup--update-the-tree-statistics">Step 4: <strong>Backup</strong> — update the tree statistics<a hidden class="anchor" aria-hidden="true" href="#step-4-backup--update-the-tree-statistics">#</a></h2>
+<p>The leaf’s evaluation $V(s_L)$ is <strong>propagated back up</strong> the tree:</p>
+<p>Every move (edge) $(s, a)$ that was used to reach that leaf gets updated:</p>
+<p>$$
+N(s,a) = \sum_{i=1}^{n} 1(s,a,i)
+$$</p>
+<p>$$
+Q(s,a) = \frac{1}{N(s,a)} \sum_{i=1}^{n} 1(s,a,i) V(s_L^i)
+$$</p>
+<aside>
+💡
+<ul>
+<li>$1(s,a,i)$ = 1
+<ul>
+<li>if that move was part of the i-th simulation, else 0.</li>
+</ul>
+</li>
+<li>$V(s_L^i)$ = evaluation result from that simulation’s leaf.</li>
+</ul>
+</aside>
+<p>So, <strong>Q(s,a)</strong> becomes the <em>average value of all evaluations ( $r$ and $vθ$) in its subtree</em>.</p>
+<h2 id="step-5-final-move-decision">Step 5: <strong>Final move decision</strong><a hidden class="anchor" aria-hidden="true" href="#step-5-final-move-decision">#</a></h2>
+<p>After thousands of simulations, the root node has a set of moves with:</p>
+<ul>
+<li>$P(s_0, a)$: from policy network,</li>
+<li>$Q(s_0, a)$: average win rate,</li>
+<li>$N(s_0, a)$: visit counts.</li>
+</ul>
+<p>AlphaGo <strong>chooses the move with the highest visit count (N)</strong> — the most explored and trusted move.</p>
+<aside>
+💡
+<p>Why <strong>SL policy network</strong> performed better than <strong>RL policy network</strong> for MCTS?</p>
+<table>
+  <thead>
+      <tr>
+          <th>Policy</th>
+          <th>Behavior</th>
+          <th>Effect in MCTS</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>SL policy</strong></td>
+          <td>Mimics human experts → gives a <em>diverse set</em> of good moves</td>
+          <td>MCTS can explore several promising branches efficiently</td>
+      </tr>
+      <tr>
+          <td><strong>RL policy</strong></td>
+          <td>Optimized for winning → focuses too narrowly on top 1–2 moves</td>
+          <td>MCTS loses diversity → gets less exploration benefit</td>
+      </tr>
+  </tbody>
+</table>
+<p>So, for MCTS’s exploration stage, a <strong>broader prior (SL policy)</strong> performs better.</p>
+<p>But for <strong>value estimation</strong>, the <strong>RL value network</strong> is superior — because it predicts winning chances more accurately.</p>
+</aside>
+<h2 id="implementation-detail">Implementation detail<a hidden class="anchor" aria-hidden="true" href="#implementation-detail">#</a></h2>
+<ul>
+<li>Evaluating policy &amp; value networks takes <strong>much more compute</strong> than classical search.</li>
+<li>AlphaGo used:
+<ul>
+<li><strong>40 search threads</strong>,</li>
+<li><strong>48 CPUs</strong>,</li>
+<li><strong>8 GPUs</strong> for parallel evaluation.</li>
+</ul>
+</li>
+<li>The final system ran <strong>asynchronous multi-threaded search</strong>:
+<ul>
+<li>CPUs handle the tree search logic,</li>
+<li>GPUs compute policy and value network evaluations in parallel.</li>
+</ul>
+</li>
+</ul>
+<p>This allowed AlphaGo to efficiently combine deep learning with massive search.</p>
+<aside>
+💡
+<p>All programs were allowed <strong>5 s</strong> of computation time per move.</p>
+</aside>
+<h1 id="discussion">Discussion<a hidden class="anchor" aria-hidden="true" href="#discussion">#</a></h1>
+<ul>
+<li>In this work we have developed <strong>a Go program</strong>, based on a combination of <strong>deep neural networks</strong> and <strong>tree search.</strong></li>
+<li>We have developed, for the first time, <strong>effective move selection</strong> and <strong>position evaluation functions</strong> for Go,
+<ul>
+<li>based on deep neural networks that are trained by <strong>a novel combination of supervised and reinforcement learning.</strong></li>
+</ul>
+</li>
+<li>We have introduced a new search algorithm that successfully combines neural network evaluations with <strong>Monte Carlo rollouts.</strong></li>
+</ul>
+<aside>
+💡
+<p>Our program <strong>AlphaGo</strong> integrates these components together, at scale, in a high-performance tree search engine.</p>
+</aside>
+<ul>
+<li>Select those positions more intelligently, using the <strong>policy network</strong>, and evaluating them more precisely, using the <strong>value network.</strong></li>
+</ul>
+<aside>
+💡
+<p><strong>Policy network</strong> → “probability of choosing a move”</p>
+<p><strong>Value network</strong> → “probability of winning from a position”</p>
+</aside>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
