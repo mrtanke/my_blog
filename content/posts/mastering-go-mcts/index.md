@@ -28,7 +28,6 @@ The most challenging of classic games for AI, because:
 ## **AlphaGo**
 
 <aside>
-💡
 
 Imagine AlphaGo is a *smart player* who has:
 
@@ -54,7 +53,6 @@ The main innovations include:
         - **depth** (number of steps to simulate) of search.
 
 <aside>
-💡
 
 ## **MCTS**
 
@@ -102,7 +100,6 @@ The main innovations include:
             - This method led to strong results in simpler games (backgammon, Scrabble), and weak amateur level in Go before AlphaGo.
 
 <aside>
-💡
 
 “Simulate” and “Roll out” basically mean the **same thing** in this context.
 
@@ -144,7 +141,6 @@ It’s simple but inefficient — great for small games, too slow and noisy for 
 ### **Training pipeline of AlphaGo**
 
 <aside>
-💡
 
 - Deep **convolutional neural networks (CNNs)** can represent board positions much better.
 - So AlphaGo uses CNNs to **reduce the search complexity** in two ways:
@@ -177,7 +173,6 @@ It’s simple but inefficient — great for small games, too slow and noisy for 
 ## **Fast Rollout Policy networks**
 
 <aside>
-💡
 
 **$p_\pi(a|s)$**
 
@@ -218,7 +213,6 @@ It’s simple but inefficient — great for small games, too slow and noisy for 
  
 
 <aside>
-💡
 
 **Problem** of naive approach of predicting game outcomes from data consisting of complete games:
 
@@ -271,7 +265,6 @@ u(s,a) \propto \frac{P(s,a)}{1 + N(s,a)}
 $$
 
 <aside>
-💡
 
 - $Q(s,a)$: “How good this move has proven so far.”
 - $u(s,a)$: “How much we *should still explore* this move.”
@@ -327,7 +320,6 @@ Q(s,a) = \frac{1}{N(s,a)} \sum_{i=1}^{n} 1(s,a,i) V(s_L^i)
 $$
 
 <aside>
-💡
 
 - $1(s,a,i)$ = 1
     - if that move was part of the i-th simulation, else 0.
@@ -347,7 +339,6 @@ After thousands of simulations, the root node has a set of moves with:
 AlphaGo **chooses the move with the highest visit count (N)** — the most explored and trusted move.
 
 <aside>
-💡
 
 Why **SL policy network** performed better than **RL policy network** for MCTS?
 
@@ -376,7 +367,6 @@ But for **value estimation**, the **RL value network** is superior — because i
 This allowed AlphaGo to efficiently combine deep learning with massive search.
 
 <aside>
-💡
 
 All programs were allowed **5 s** of computation time per move.
 
@@ -390,7 +380,6 @@ All programs were allowed **5 s** of computation time per move.
 - We have introduced a new search algorithm that successfully combines neural network evaluations with **Monte Carlo rollouts.**
 
 <aside>
-💡
 
 Our program **AlphaGo** integrates these components together, at scale, in a high-performance tree search engine.
 
@@ -399,7 +388,6 @@ Our program **AlphaGo** integrates these components together, at scale, in a hig
 - Select those positions more intelligently, using the **policy network**, and evaluating them more precisely, using the **value network.**
 
 <aside>
-💡
 
 **Policy network** → “probability of choosing a move”
 
