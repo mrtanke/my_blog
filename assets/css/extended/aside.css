@@ -1,0 +1,50 @@
+/* PaperMod-style callout for <aside> blocks used inside posts and lists */
+.entry aside,
+.post aside,
+article aside,
+main aside {
+  position: relative;
+  background: var(--aside-bg, #fbfbfb);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  color: var(--text, #222);
+}
+
+
+/* Make first bolded line behave like a title inside the aside */
+.entry aside strong:first-of-type,
+.entry aside p strong:first-of-type {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  font-size: 1.03rem;
+}
+
+.entry aside p:first-child { margin-top: 0; }
+
+.entry aside ul,
+.entry aside ol {
+  margin: 0.4rem 0 0 1.1rem;
+}
+
+.entry aside ul ul,
+.entry aside ol ol,
+.entry aside ul ol,
+.entry aside ol ul {
+  margin-left: 0.9rem;
+}
+
+/* Slightly smaller text inside callouts for visual balance */
+.entry aside {
+  font-size: 0.99rem;
+  line-height: 1.6;
+}
+
+/* Responsive: keep padding tidy on small screens */
+@media (max-width: 640px) {
+  .entry aside { padding: 1rem; border-radius: 8px; }
+  .entry aside:before { left: 0.9rem; top: 0.7rem; }
+}
