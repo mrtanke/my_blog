@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Home</title>
-    <link>https://my-blog-alpha-vert.vercel.app/</link>
+    <link>http://localhost:1313/</link>
     <description>Recent content on Home</description>
     <generator>Hugo -- 0.152.1</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 24 Oct 2025 13:58:55 +0200</lastBuildDate>
-    <atom:link href="https://my-blog-alpha-vert.vercel.app/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Chain-of-Thought Prompting</title>
-      <link>https://my-blog-alpha-vert.vercel.app/posts/chain-of-thought-prompting/</link>
+      <link>http://localhost:1313/posts/chain-of-thought-prompting/</link>
       <pubDate>Fri, 24 Oct 2025 13:58:55 +0200</pubDate>
-      <guid>https://my-blog-alpha-vert.vercel.app/posts/chain-of-thought-prompting/</guid>
+      <guid>http://localhost:1313/posts/chain-of-thought-prompting/</guid>
       <description>Paper-reading notes: Chain-of-Thought Prompting Elicits Reasoning in Large Language Models</description>
     </item>
     <item>
       <title>Mastering the game of Go with MCTS and Deep Neural Networks</title>
-      <link>https://my-blog-alpha-vert.vercel.app/posts/mastering-go-mcts/</link>
+      <link>http://localhost:1313/posts/mastering-go-mcts/</link>
       <pubDate>Fri, 24 Oct 2025 10:00:00 +0000</pubDate>
-      <guid>https://my-blog-alpha-vert.vercel.app/posts/mastering-go-mcts/</guid>
+      <guid>http://localhost:1313/posts/mastering-go-mcts/</guid>
       <description>Paper-reading notes: Mastering the game of Go with deep</description>
     </item>
   </channel>

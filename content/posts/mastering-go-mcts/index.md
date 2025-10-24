@@ -7,8 +7,6 @@ ShowWordCount: true
 ShowReadingTime: false
 ---
 
-
-
 # Abstract
 
 **The game of Go:** 
@@ -231,7 +229,7 @@ It’s simple but inefficient — great for small games, too slow and noisy for 
 
 # Searching with policy and value networks (MCTS)
 
-![image.png](./image 1.png)
+![image.png](./image_1.png)
 
 | Panel | Step | What happens | Which network helps |
 | --- | --- | --- | --- |
