@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Attention is All You Need | Home</title>
+<meta name="keywords" content="">
+<meta name="description" content="Paper-reading notes: Attention is All You Need">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/posts/attention_is_all_you_need/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.9bb7abd44394c0e0d2cecd8ad4322626054cd3f5709a6d890d5a408efaf1fa90.css" integrity="sha256-m7er1EOUwODSzs2K1DImJgVM0/Vwmm2JDVpAjvrx&#43;pA=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/attention_is_all_you_need/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" integrity="" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js" integrity="" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" integrity="" crossorigin="anonymous"></script>
+<script defer>
+  document.addEventListener("DOMContentLoaded", function() {
+    if (typeof renderMathInElement === 'function') {
+      renderMathInElement(document.body, {
+        
+        delimiters: [
+          {left: "$$", right: "$$", display: true},
+          {left: "\\[", right: "\\]", display: true},
+          {left: "$", right: "$", display: false},
+          {left: "\\(", right: "\\)", display: false}
+        ],
+        
+        throwOnError: false,
+        
+        ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      });
+    }
+  });
+</script>
+<meta property="og:url" content="http://localhost:1313/posts/attention_is_all_you_need/">
+  <meta property="og:site_name" content="Home">
+  <meta property="og:title" content="Attention is All You Need">
+  <meta property="og:description" content="Paper-reading notes: Attention is All You Need">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-10-25T00:36:58+00:00">
+    <meta property="article:modified_time" content="2025-10-25T00:36:58+00:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Attention is All You Need">
+<meta name="twitter:description" content="Paper-reading notes: Attention is All You Need">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Attention is All You Need",
+      "item": "http://localhost:1313/posts/attention_is_all_you_need/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Attention is All You Need",
+  "name": "Attention is All You Need",
+  "description": "Paper-reading notes: Attention is All You Need",
+  "keywords": [
+    
+  ],
+  "articleBody": "Video Source\nPage Source\nPratical Source\n1. Introduction Extension of Abstract.\nSequence Modeling: Recurrent language modelsExtension of Abstract.\nOperate step-by-step, processing one token or time step at a time. one input + hidden state → one output + hidden state (update every time) e.g., RNNs, LSTMs Encoder-decoder architectures\nComposed of two RNNs (or other models): one to encode input into a representation another to decode it into the output sequence one input + hidden state → … → hidden state → one output + hidden state → … e.g., seq2seq Disadvantages about these two: Recurrent models preclude parallelization, so it’s not good.\nEncoder-decoder models have used attention to pass the stuff from encoder to decoder more effectively.\nAttention doesn’t use recurrence and entirely relies on an attention mechanism to draw glabal dependencies between input and output. 2. Background Corresponding Work:\nSpeak clearly about the corresponding papers, the connections between u and the papers, and the differences.\nReduce sequential computation: Typically use convolutional neural networks → the number of operations grows in the distance between positions → transfomer: a constant number of operations\nat the cost of reduced effective resolution due to averaging attention-weighted positions we counteract this bad effect with Multi-Head Attention Self-attention: compute a representation of the sequence based on different positions\nEnd-to-end memory networks: ✔ Reccurrence attention mechanism\n❌ Sequence-aligned recurrence\nTransformer: The first transduction model relying entirely on self-attention to do encoder-decoder model. ( to compute representations of its input and output without using sequence-aligned RNNs or convolution)\ntransduction model refers to making predictions or inferences about specific instances based on the data at hand, without relying on a prior generalization across all possible examples, which is different from Inductive learning.\n3. Model Architecture The Transformer uses stacked self-attention and point-wise, fully connected layers for both the encoder and the decoder.\nEncoder: maps an input sequence of symbol representations x → a sequence of continuous representations z. Decoder: given z, generates an output sequence of symbols one element at a time. At each step, the model is auto-regressive. Why Using LayerNorm not BatchNorm? LayerNorm normalizes across features of a single sample, suitable for variable-length sequences.\nBatchNorm normalizes across the batch, which can be inconsistent for sequence tasks.\n3.1 Encoder and Decoder Stacks Encoder N = 6 identical layers, each layer has two sub-layers.\nmulti-head self-attention mechanism simple, position-wise fully connected feed-forward network For each sub-layer, connect a layer normalization and a residual connection.\ndimension of output = 512\nDecoder N = 6 identical layers, each layer has three sub-layers.\nmasked multi-head attention over the output of the encoder stack multi-head self-attention mechanism simple, position-wise fully connected feed-forward network For each sub-layer, connect a layer normalization and a residual connection.\n3.2 Attention An attention function can be described as mapping a query and a set of key-value pairs to an output where the query, keys, values, and output are all vectors.\nThe output is computed as a weighted sum of the values, where the weight assigned to each value is computed by a compatibility function of the query with the corresponding key.\n( Given a query, output is computed by similarity between query and keys, then different keys have different weights, next combine the values based on the weights. )\n3.2.1 Scaled Dot-Product Attention We compute the dot products of the query with all keys, divide each by length of query √, and apply a softmax function to obtain the weights on the values.\nWhy divide each by length of query √ ?\nIt prevents the input to the softmax from becoming excessively large, ensuring that the softmax outputs remain well-distributed and numerically stable. The softmax function normalize the scores into probabilities, but it doesn’t address the problem of large input magnitudes directly. If the inputs to softmax are extremely large, the e^x can become numerically unstable, leading to issues in computation.\nn refers to the length of a sequence, the number of the words.\ndk refers to the length of the one word vector.\nm refers to the number of the target words.\ndv refers to the length of the one target word vector.\nWhat there is a function of the Mask?\nWhen computing the output, I only use the key-value pairs up to the current time and do not use any later key-value pairs.\n3.2.2 Multi-Head Attention Linear projection, just like lots of channels.\nLinearly project the queries, keys and values h times to low dimensions with different, learned linear projections.\nFinally, these are concatenated (stack) and once again projected.\nWe emply h = 8 parallel attention layers, or heads.\nSo for each layer or head, we make their dimension to 64 to make the total computational cost is similar to single-head attention.\n3.2.3 Application of Attention in our Model The Transformer uses multi-head attention in three different ways:\nIn “encoder-decoder attention” layers, queries → previous decoder layer keys and values → the output of the encoder In “encoder self-attention” layers, keys, values and queries all come from the previous layer in the encoder In “decoder self-attention” layers, keys, values and queries all come from the previous layer in the decoder allow each position in the decoder to attend to all positions in the decoder up to and including that position 3.3 Position-wise Feed-Forward Networks The fully connected feed-forward network is applied to each position separately and identically.\nThe Multi-Head Attention has already get the location information, now we need to add more expression ability by adding non-linear.\nThe output and MLP patterns are the same. The difference are the input source.\n3.4 Embedding and Softmax Embedding convert the input tokens to vectors of dimension ( 512 ), then multiply those weights by\n$\\sqrt {d_{models}}$\nWhy multiply those weights by $\\sqrt {d_{models}}$ ?\nTo boosts the magnitude, making it more aligned with other components of the model. Because the initial value is between 0~1 by using normal distribution.\nWe update the L2 norm of the embeddings to 1 finally, so we need to ensure the value of each dimension not too small. The L2 norm value of a vector to 1 is best to express a word, because it only express direction.\nSoftmax convert the decoder output to predicted next-token probabilities.\n3.5 Positional Encoding The order change, but the values don’t change. So we add the sequential information to the input.\nWe use sine and cosine functions of different frequencies [-1, 1]\n4. Why Self-Attention Length of a word → d Number of words → n Self-Attention → n words ✖️ every words need to multiply with n words and for ****each two words do d multiplying. Recurrent → d-dimension vector multiply d✖️d matrix, n times Convolutional → k kernel_size, n words, d^2 input_channels ✖️ output_channels (Draw picture clear) Self-Attention (restricted) → r the number of neighbors It seems like Self-Attention architecture has lots of advantages, but it needs more data and bigger model to train to achieve the same effect.\n5. Training 5.1 Training Data and Batching Sentences were encoded using byte-pair encoding, which has a shared source-target vocabulary of about 37000 tokens. → So we share the same weight matrix between the two embedding layers and the pre-softmax linear transformation.\n5.2 Hardware and Schedule 5.3 Optimizer 5.4 Regularization Residual Dropout Label Smoothing 6. Results $N:$ number of blocks\n$d_{model}:$ the length of a token vector\n$d_{ff}:$ Feed-Forward Full-Connected Layer Intermediate layer output size\n$h:$ the number of heads\n$d_k:$ the dimension of keys in a head\n$d_v :$ the dimension of values in a head\n$P_{drop}:$ dropout rate\n$\\epsilon_{ls}:$ Label Smoothing value, the learned label value\n$train steps:$ the number of batchs\n",
+  "wordCount" : "1268",
+  "inLanguage": "en",
+  "datePublished": "2025-10-25T00:36:58Z",
+  "dateModified": "2025-10-25T00:36:58Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/attention_is_all_you_need/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Home",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="Home (Alt + H)">Home</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Attention is All You Need
+    </h1>
+    <div class="post-description">
+      Paper-reading notes: Attention is All You Need
+    </div>
+    <div class="post-meta"><span title='2025-10-25 00:36:58 +0000 +0000'>October 25, 2025</span>&nbsp;·&nbsp;<span>1268 words</span>
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#1-introduction" aria-label="1. Introduction">1. Introduction</a><ul>
+                        
+                <li>
+                    <a href="#sequence-modeling" aria-label="Sequence Modeling:">Sequence Modeling:</a></li>
+                <li>
+                    <a href="#disadvantages-about-these-two" aria-label="Disadvantages about these two:">Disadvantages about these two:</a><ul>
+                        
+                <li>
+                    <a href="#attention-doesnt-use-recurrence-and-entirely-relies-on-an-attention-mechanism-to-draw-glabal-dependencies-between-input-and-output" aria-label="Attention doesn’t use recurrence and entirely relies on an attention mechanism to draw glabal dependencies between input and output.">Attention doesn’t use recurrence and entirely relies on an attention mechanism to draw glabal dependencies between input and output.</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#2-background" aria-label="2. Background">2. Background</a><ul>
+                        <ul>
+                        
+                <li>
+                    <a href="#reduce-sequential-computation" aria-label="Reduce sequential computation:">Reduce sequential computation:</a></li></ul>
+                    
+                <li>
+                    <a href="#self-attention" aria-label="Self-attention:">Self-attention:</a></li>
+                <li>
+                    <a href="#end-to-end-memory-networks" aria-label="End-to-end memory networks:">End-to-end memory networks:</a></li>
+                <li>
+                    <a href="#transformer" aria-label="Transformer:">Transformer:</a></li></ul>
+                </li>
+                <li>
+                    <a href="#3-model-architecture" aria-label="3. Model Architecture">3. Model Architecture</a><ul>
+                        <ul>
+                        
+                <li>
+                    <a href="#why-using-layernorm-not-batchnorm" aria-label="Why Using LayerNorm not BatchNorm?">Why Using LayerNorm not BatchNorm?</a></li></ul>
+                    
+                <li>
+                    <a href="#31-encoder-and-decoder-stacks" aria-label="3.1 Encoder and Decoder Stacks">3.1 Encoder and Decoder Stacks</a><ul>
+                        
+                <li>
+                    <a href="#encoder" aria-label="Encoder">Encoder</a></li>
+                <li>
+                    <a href="#decoder" aria-label="Decoder">Decoder</a></li></ul>
+                </li>
+                <li>
+                    <a href="#32-attention" aria-label="3.2 Attention">3.2 Attention</a><ul>
+                        
+                <li>
+                    <a href="#321-scaled-dot-product-attention" aria-label="3.2.1 Scaled Dot-Product Attention">3.2.1 Scaled Dot-Product Attention</a></li>
+                <li>
+                    <a href="#322-multi-head-attention" aria-label="3.2.2 Multi-Head Attention">3.2.2 Multi-Head Attention</a></li>
+                <li>
+                    <a href="#323-application-of-attention-in-our-model" aria-label="3.2.3 Application of Attention in our Model">3.2.3 Application of Attention in our Model</a></li></ul>
+                </li>
+                <li>
+                    <a href="#33-position-wise-feed-forward-networks" aria-label="3.3 Position-wise Feed-Forward Networks">3.3 Position-wise Feed-Forward Networks</a></li>
+                <li>
+                    <a href="#34-embedding-and-softmax" aria-label="3.4 Embedding and Softmax">3.4 Embedding and Softmax</a><ul>
+                        
+                <li>
+                    <a href="#embedding" aria-label="Embedding">Embedding</a></li>
+                <li>
+                    <a href="#softmax" aria-label="Softmax">Softmax</a></li></ul>
+                </li>
+                <li>
+                    <a href="#35-positional-encoding" aria-label="3.5 Positional Encoding">3.5 Positional Encoding</a></li></ul>
+                </li>
+                <li>
+                    <a href="#4-why-self-attention" aria-label="4. Why Self-Attention">4. Why Self-Attention</a></li>
+                <li>
+                    <a href="#5-training" aria-label="5. Training">5. Training</a><ul>
+                        
+                <li>
+                    <a href="#51-training-data-and-batching" aria-label="5.1 Training Data and Batching">5.1 Training Data and Batching</a></li>
+                <li>
+                    <a href="#52-hardware-and-schedule" aria-label="5.2 Hardware and Schedule">5.2 Hardware and Schedule</a></li>
+                <li>
+                    <a href="#53-optimizer" aria-label="5.3 Optimizer">5.3 Optimizer</a></li>
+                <li>
+                    <a href="#54-regularization" aria-label="5.4 Regularization">5.4 Regularization</a></li></ul>
+                </li>
+                <li>
+                    <a href="#6-results" aria-label="6. Results">6. Results</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><p><a href="https://www.bilibili.com/video/BV1pu411o7BE/?spm_id_from=333.1387.top_right_bar_window_history.content.click&amp;vd_source=83d7a54445de4810b52e58e4864b4605">Video Source</a></p>
+<p><a href="https://arxiv.org/pdf/1706.03762">Page Source</a></p>
+<p><a href="https://www.youtube.com/watch?v=kCc8FmEb1nY">Pratical Source</a></p>
+<h1 id="1-introduction">1. Introduction<a hidden class="anchor" aria-hidden="true" href="#1-introduction">#</a></h1>
+<aside>
+<p>Extension of Abstract.</p>
+</aside>
+<h2 id="sequence-modeling">Sequence Modeling:<a hidden class="anchor" aria-hidden="true" href="#sequence-modeling">#</a></h2>
+<p>Recurrent language modelsExtension of Abstract.</p>
+<ul>
+<li>Operate step-by-step, processing one token or time step at a time.</li>
+<li><strong>one input + hidden state → one output + hidden state (update every time)</strong></li>
+<li>e.g., RNNs, LSTMs</li>
+</ul>
+<p>Encoder-decoder architectures</p>
+<ul>
+<li>Composed of two RNNs (or other models):
+<ul>
+<li>one to encode input into a representation</li>
+<li>another to decode it into the output sequence</li>
+</ul>
+</li>
+<li><strong>one input + hidden state → … → hidden state → one output + hidden state → …</strong></li>
+<li>e.g., seq2seq</li>
+</ul>
+<h2 id="disadvantages-about-these-two">Disadvantages about these two:<a hidden class="anchor" aria-hidden="true" href="#disadvantages-about-these-two">#</a></h2>
+<p>Recurrent models preclude parallelization, so it’s not good.</p>
+<p>Encoder-decoder models have used attention to pass the stuff from encoder to decoder more effectively.</p>
+<h3 id="attention-doesnt-use-recurrence-and-entirely-relies-on-an-attention-mechanism-to-draw-glabal-dependencies-between-input-and-output">Attention doesn’t use recurrence and entirely relies on an attention mechanism to draw glabal dependencies between input and output.<a hidden class="anchor" aria-hidden="true" href="#attention-doesnt-use-recurrence-and-entirely-relies-on-an-attention-mechanism-to-draw-glabal-dependencies-between-input-and-output">#</a></h3>
+<h1 id="2-background">2. Background<a hidden class="anchor" aria-hidden="true" href="#2-background">#</a></h1>
+<aside>
+<p><strong>Corresponding Work:</strong></p>
+<p>Speak clearly about the corresponding papers, the connections between u and the papers, and the differences.</p>
+</aside>
+<h3 id="reduce-sequential-computation">Reduce sequential computation:<a hidden class="anchor" aria-hidden="true" href="#reduce-sequential-computation">#</a></h3>
+<p>Typically use <strong>convolutional neural networks</strong> → the number of operations grows in the distance between positions → <strong>transfomer</strong>: a constant number of operations</p>
+<ul>
+<li>at the cost of reduced effective resolution due to averaging attention-weighted positions</li>
+<li>we counteract this bad effect with Multi-Head Attention</li>
+</ul>
+<h2 id="self-attention">Self-attention:<a hidden class="anchor" aria-hidden="true" href="#self-attention">#</a></h2>
+<p>compute a representation of the sequence based on different positions</p>
+<h2 id="end-to-end-memory-networks">End-to-end memory networks:<a hidden class="anchor" aria-hidden="true" href="#end-to-end-memory-networks">#</a></h2>
+<p>✔ Reccurrence attention mechanism</p>
+<p>❌ Sequence-aligned recurrence</p>
+<h2 id="transformer">Transformer:<a hidden class="anchor" aria-hidden="true" href="#transformer">#</a></h2>
+<p>The first <strong>transduction</strong> model relying entirely on self-attention to do encoder-decoder model. ( to compute representations of its input and output without using <strong>sequence-aligned RNNs</strong> or <strong>convolution</strong>)</p>
+<hr>
+<p><strong>transduction model</strong> refers to making predictions or inferences about specific instances based on the data at hand, without relying on a prior generalization across all possible examples, which is different from <strong>Inductive learning</strong>.</p>
+<h1 id="3-model-architecture">3. Model Architecture<a hidden class="anchor" aria-hidden="true" href="#3-model-architecture">#</a></h1>
+<p>The Transformer uses <strong>stacked self-attention</strong> and <strong>point-wise</strong>, <strong>fully connected layers</strong> for both the encoder and the decoder.</p>
+<ul>
+<li><strong>Encoder</strong>: maps an input sequence of symbol representations x → a sequence of continuous representations z.</li>
+<li><strong>Decoder</strong>: given z, generates an output sequence of symbols one element at a time. At each step, the model is <strong>auto-regressive</strong>.</li>
+</ul>
+<p><img alt="image.png" loading="lazy" src="/posts/attention_is_all_you_need/de7438fa-d3df-4ab7-8dd0-1abb2879a205.png"></p>
+<h3 id="why-using-layernorm-not-batchnorm">Why Using LayerNorm not BatchNorm?<a hidden class="anchor" aria-hidden="true" href="#why-using-layernorm-not-batchnorm">#</a></h3>
+<p><strong>LayerNorm</strong> normalizes across features of a single sample, suitable for <strong>variable-length sequences</strong>.</p>
+<p><strong>BatchNorm</strong> normalizes across the batch, which can be inconsistent for sequence tasks.</p>
+<p><img alt="image.png" loading="lazy" src="/posts/attention_is_all_you_need/image.png"></p>
+<h2 id="31-encoder-and-decoder-stacks">3.1 Encoder and Decoder Stacks<a hidden class="anchor" aria-hidden="true" href="#31-encoder-and-decoder-stacks">#</a></h2>
+<h3 id="encoder">Encoder<a hidden class="anchor" aria-hidden="true" href="#encoder">#</a></h3>
+<p>N = 6 identical layers, each layer has <strong>two sub-layers</strong>.</p>
+<ul>
+<li>multi-head self-attention mechanism</li>
+<li>simple, position-wise fully connected feed-forward network</li>
+</ul>
+<p>For each sub-layer, connect <strong>a layer normalization</strong> and <strong>a residual connection</strong>.</p>
+<p><strong>dimension of output = 512</strong></p>
+<h3 id="decoder">Decoder<a hidden class="anchor" aria-hidden="true" href="#decoder">#</a></h3>
+<p>N = 6 identical layers, each layer has <strong>three sub-layers</strong>.</p>
+<ul>
+<li><strong>masked multi-head attention over the output of the encoder stack</strong></li>
+<li>multi-head self-attention mechanism</li>
+<li>simple, position-wise fully connected feed-forward network</li>
+</ul>
+<p>For each sub-layer, connect <strong>a layer normalization</strong> and <strong>a residual connection</strong>.</p>
+<h2 id="32-attention">3.2 Attention<a hidden class="anchor" aria-hidden="true" href="#32-attention">#</a></h2>
+<p>An attention function can be described as mapping <strong>a query</strong> and <strong>a set of key-value pairs</strong> to an output where the query, keys, values, and output are all vectors.</p>
+<p>The output is computed as <strong>a weighted sum of the values</strong>, where the weight assigned to each value is computed by a compatibility function of the <strong>query</strong> with the corresponding <strong>key</strong>.</p>
+<p>( Given a query, output is computed by similarity between query and keys, then different keys have different weights, next combine the values based on the weights. )</p>
+<h3 id="321-scaled-dot-product-attention">3.2.1 Scaled Dot-Product Attention<a hidden class="anchor" aria-hidden="true" href="#321-scaled-dot-product-attention">#</a></h3>
+<p>We compute the <strong>dot products of the query with all keys</strong>, <strong>divide each by length of query √</strong>, and apply <strong>a softmax function</strong> to obtain the weights on the values.</p>
+<aside>
+<p><strong>Why divide each by length of query √ ?</strong></p>
+<p>It prevents the input to the softmax from becoming excessively large, ensuring that the softmax outputs remain well-distributed and numerically stable.
+The softmax function normalize the scores into probabilities, but it doesn&rsquo;t address the problem of large input magnitudes directly.
+If the inputs to softmax are extremely large, the e^x can become numerically unstable,
+leading to issues in computation.</p>
+</aside>
+<p><img alt="image.png" loading="lazy" src="/posts/attention_is_all_you_need/f7284f40-9762-43a0-97df-d90385e72eba.png"></p>
+<p><strong>n</strong> refers to the length of a sequence, the number of the words.</p>
+<p><strong>dk</strong> refers to the length of the one word vector.</p>
+<p><strong>m</strong> refers to the number of the target words.</p>
+<p><strong>dv</strong> refers to the length of the one target word vector.</p>
+<p><img alt="image.png" loading="lazy" src="/posts/attention_is_all_you_need/fe7b592c-8419-46dd-81b7-46173cfa5b7a.png"></p>
+<aside>
+<p><strong>What there is a function of the Mask?</strong></p>
+<p>When computing the output, I only use the key-value pairs up to the current time and do not use any later key-value pairs.</p>
+</aside>
+<h3 id="322-multi-head-attention">3.2.2 Multi-Head Attention<a hidden class="anchor" aria-hidden="true" href="#322-multi-head-attention">#</a></h3>
+<p><strong>Linear projection</strong>, just like lots of channels.</p>
+<p>Linearly project the queries, keys and values h times to <strong>low dimensions</strong> with different, learned linear projections.</p>
+<p>Finally, these are <strong>concatenated</strong> (stack) and once again projected.</p>
+<p><img alt="image.png" loading="lazy" src="/posts/attention_is_all_you_need/f3763f2a-9e60-4b6b-a4b1-2ca5158f24e6.png"></p>
+<p><img alt="image.png" loading="lazy" src="/posts/attention_is_all_you_need/image_1.png"></p>
+<p>We emply <strong>h = 8</strong> parallel <strong>attention layers, or heads</strong>.</p>
+<p>So for each layer or head, we make their dimension to <strong>64</strong> to make the total computational cost is similar to single-head attention.</p>
+<h3 id="323-application-of-attention-in-our-model">3.2.3 Application of Attention in our Model<a hidden class="anchor" aria-hidden="true" href="#323-application-of-attention-in-our-model">#</a></h3>
+<p>The Transformer uses multi-head attention in three different ways:</p>
+<ul>
+<li>In “encoder-decoder attention” layers,
+<ul>
+<li><strong>queries</strong> → previous <strong>decoder</strong> layer</li>
+<li><strong>keys and values</strong> → the output of the <strong>encoder</strong></li>
+</ul>
+</li>
+<li>In “encoder self-attention” layers,
+<ul>
+<li><strong>keys, values</strong> and <strong>queries</strong> all come from the previous layer in the <strong>encoder</strong></li>
+</ul>
+</li>
+<li>In “decoder self-attention” layers,
+<ul>
+<li><strong>keys, values</strong> and <strong>queries</strong> all come from the previous layer in the <strong>decoder</strong></li>
+<li>allow each position in the decoder to attend to all positions in the decoder up to and including that position</li>
+</ul>
+</li>
+</ul>
+<h2 id="33-position-wise-feed-forward-networks">3.3 Position-wise Feed-Forward Networks<a hidden class="anchor" aria-hidden="true" href="#33-position-wise-feed-forward-networks">#</a></h2>
+<p>The <strong>fully connected</strong> feed-forward network is applied to <strong>each position</strong> separately and identically.</p>
+<p><img alt="image.png" loading="lazy" src="/posts/attention_is_all_you_need/image_2.png"></p>
+<p>The Multi-Head Attention has already get the location information, now we need to add more expression ability by <strong>adding non-linear</strong>.</p>
+<p><img alt="image.png" loading="lazy" src="/posts/attention_is_all_you_need/b99d49bb-edd1-404e-878e-b6f56d602f61.png"></p>
+<aside>
+<p>The output and <strong>MLP patterns</strong> are the same.
+The difference are the <strong>input source</strong>.</p>
+</aside>
+<h2 id="34-embedding-and-softmax">3.4 Embedding and Softmax<a hidden class="anchor" aria-hidden="true" href="#34-embedding-and-softmax">#</a></h2>
+<p><img alt="image.png" loading="lazy" src="/posts/attention_is_all_you_need/image_3.png"></p>
+<h3 id="embedding">Embedding<a hidden class="anchor" aria-hidden="true" href="#embedding">#</a></h3>
+<p>convert the input tokens to vectors of dimension ( 512 ), then <strong>multiply those weights by</strong></p>
+<p>$\sqrt {d_{models}}$</p>
+<aside>
+<p><strong>Why multiply those weights by $\sqrt {d_{models}}$ ?</strong></p>
+<p>To <strong>boosts the magnitude</strong>, making it more aligned with other components of the model.
+Because the initial value is between 0~1 by using normal distribution.</p>
+<p>We update the L2 norm of the embeddings to 1 finally, so we need to ensure the value of each dimension not too small.
+The L2 norm value of a vector to 1 is best to express a word, because it only express direction.</p>
+</aside>
+<h3 id="softmax">Softmax<a hidden class="anchor" aria-hidden="true" href="#softmax">#</a></h3>
+<p>convert the decoder output to predicted next-token probabilities.</p>
+<h2 id="35-positional-encoding">3.5 Positional Encoding<a hidden class="anchor" aria-hidden="true" href="#35-positional-encoding">#</a></h2>
+<p><strong>The order change, but the values don’t change.</strong> So we <strong>add the sequential information to the input.</strong></p>
+<p>We use <strong>sine and cosine functions</strong> of different frequencies  <strong>[-1, 1]</strong></p>
+<p><img alt="image.png" loading="lazy" src="/posts/attention_is_all_you_need/image_4.png"></p>
+<h1 id="4-why-self-attention">4. Why Self-Attention<a hidden class="anchor" aria-hidden="true" href="#4-why-self-attention">#</a></h1>
+<p><img alt="image.png" loading="lazy" src="/posts/attention_is_all_you_need/image_5.png"></p>
+<ul>
+<li><strong>Length of a word → d</strong></li>
+<li><strong>Number of words → n</strong></li>
+<li>Self-Attention → <strong>n words ✖️</strong> every words need to multiply with <strong>n words</strong> and for ****each two words <strong>do d multiplying</strong>.</li>
+<li>Recurrent → <strong>d-dimension vector</strong> multiply <strong>d✖️d matrix, n times</strong></li>
+<li>Convolutional → <strong>k kernel_size, n words, d^2 input_channels ✖️ output_channels</strong> (Draw picture clear)</li>
+<li>Self-Attention (restricted) → <strong>r</strong> the number of <strong>neighbors</strong></li>
+</ul>
+<p><strong>It seems like Self-Attention architecture has lots of advantages, but it needs more data and bigger model to train to achieve the same effect.</strong></p>
+<h1 id="5-training">5. Training<a hidden class="anchor" aria-hidden="true" href="#5-training">#</a></h1>
+<h2 id="51-training-data-and-batching">5.1 Training Data and Batching<a hidden class="anchor" aria-hidden="true" href="#51-training-data-and-batching">#</a></h2>
+<p>Sentences were encoded using byte-pair encoding, which has a <strong>shared source-target vocabulary of about 37000 tokens</strong>. → So we <strong>share the same weight matrix</strong> between the two embedding layers and the pre-softmax linear transformation.</p>
+<h2 id="52-hardware-and-schedule">5.2 Hardware and Schedule<a hidden class="anchor" aria-hidden="true" href="#52-hardware-and-schedule">#</a></h2>
+<h2 id="53-optimizer">5.3 Optimizer<a hidden class="anchor" aria-hidden="true" href="#53-optimizer">#</a></h2>
+<h2 id="54-regularization">5.4 Regularization<a hidden class="anchor" aria-hidden="true" href="#54-regularization">#</a></h2>
+<ul>
+<li>Residual Dropout</li>
+<li>Label Smoothing</li>
+</ul>
+<h1 id="6-results">6. Results<a hidden class="anchor" aria-hidden="true" href="#6-results">#</a></h1>
+<p><img alt="image.png" loading="lazy" src="/posts/attention_is_all_you_need/image_6.png"></p>
+<p>$N:$ number of blocks</p>
+<p>$d_{model}:$  the length of a token vector</p>
+<p>$d_{ff}:$ Feed-Forward Full-Connected Layer Intermediate layer output size</p>
+<p>$h:$ the number of heads</p>
+<p>$d_k:$ the dimension of keys in a head</p>
+<p>$d_v :$ the dimension of values in a head</p>
+<p>$P_{drop}:$ dropout rate</p>
+<p>$\epsilon_{ls}:$ Label Smoothing value, the learned label value</p>
+<p>$train steps:$ the number of batchs</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
