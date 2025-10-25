@@ -250,7 +250,7 @@ We use **sine and cosine functions** of different frequencies  **[-1, 1]**
 
 - **Length of a word → d**
 - **Number of words → n**
-- Self-Attention → **n words ✖️** every words need to multiply with **n words** and for ****each two words **do d multiplying**.
+- Self-Attention → **n words ✖️** every words need to multiply with **n words** and for each two words **do d multiplying**.
 - Recurrent → **d-dimension vector** multiply **d✖️d matrix, n times**
 - Convolutional → **k kernel_size, n words, d^2 input_channels ✖️ output_channels** (Draw picture clear)
 - Self-Attention (restricted) → **r** the number of **neighbors**
