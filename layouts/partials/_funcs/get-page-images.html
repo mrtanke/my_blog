@@ -1,0 +1,31 @@
+{{- /*
+  Return a slice of image-like objects (each with a Permalink) usable by OpenGraph/Twitter/schema templates.
+  Strategy:
+  - Prefer .Params.cover.image when available.
+  - Else, use page resources that match common image extensions.
+  - Else, fall back to site.Params.assets.favicon (or favicon.ico).
+*/ -}}
+{{- $images := slice -}}
+
+{{- with .Params.cover.image -}}
+  {{- if (ne (or (index $.Params "cover" | default dict).relative true) true) -}}
+    {{- $images = $images | append (dict "Permalink" (. | absURL)) -}}
+  {{- else -}}
+    {{- $images = $images | append (dict "Permalink" ((path.Join $.RelPermalink .) | absURL)) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if eq (len $images) 0 -}}
+  {{- with .Resources.Match "*.{png,jpg,jpeg,gif,webp}" -}}
+    {{- range . -}}
+      {{- $images = $images | append (dict "Permalink" .Permalink) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if eq (len $images) 0 -}}
+  {{- $favicon := site.Params.assets.favicon | default "favicon.ico" | absURL -}}
+  {{- $images = $images | append (dict "Permalink" $favicon) -}}
+{{- end -}}
+
+{{- return $images -}}
