@@ -6,4 +6,7 @@
       "config": { "distDir": "public" }
     }
   ]
+  ,"env": {
+    "HUGO_VERSION": "0.146.0"
+  }
 }
