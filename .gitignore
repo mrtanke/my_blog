@@ -1,3 +1,15 @@
+# Ignore generated Hugo output
+/public/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Node modules
+node_modules/
+
+# tmp zip exports
+tmp_zip/
 # macOS system files
 .DS_Store
 .AppleDouble
