@@ -6,8 +6,17 @@
     <description>Recent content on Re:Log</description>
     <generator>Hugo -- 0.152.1</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Jan 2026 15:06:44 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 20 Jan 2026 09:04:34 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Distg series on urbanlf</title>
+      <link>http://localhost:1313/projects/2026-01-20-distg-series-on-urbanlf/</link>
+      <pubDate>Tue, 20 Jan 2026 09:04:34 +0000</pubDate>
+      <guid>http://localhost:1313/projects/2026-01-20-distg-series-on-urbanlf/</guid>
+      <description>&lt;p&gt;I have finished reproducing the &lt;a href=&#34;https://yingqianwang.github.io/DistgLF/&#34;&gt;Distg series&lt;/a&gt; (DistgSSR / DistgASR / DistgDisp). The next task was to apply these methods or we can say models to a new dataset: &lt;a href=&#34;https://github.com/HAWKEYE-Group/UrbanLF&#34;&gt;UrbanLF&lt;/a&gt;, and evaluate how well they can perform in this dataset. The task can be summarized as:&lt;/p&gt;
+&lt;aside&gt;
+&lt;p&gt;Apply the Distg series (DistgSSR / DistgASR / DistgDisp) to a new light-field dataset (UrbanLF), obtain results, and compare them with the results from a colleague’s method.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>UrbanLF: A Comprehensive Light Field Dataset for Semantic Segmentation of Urban Scenes</title>
       <link>http://localhost:1313/posts/2026-01-17-urbanlf-a-comprehensive-light-field-dataset-for-se/</link>
