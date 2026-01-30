@@ -6,10 +6,20 @@
     <description>Recent content on Re:Log</description>
     <generator>Hugo -- 0.152.1</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Jan 2026 09:04:34 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 22 Jan 2026 08:01:09 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Distg series on urbanlf</title>
+      <title>My Implementation Notes about Building SINDy From Scratch</title>
+      <link>http://localhost:1313/projects/2026-01-22-sindy/</link>
+      <pubDate>Thu, 22 Jan 2026 08:01:09 +0000</pubDate>
+      <guid>http://localhost:1313/projects/2026-01-22-sindy/</guid>
+      <description>&lt;aside&gt;
+&lt;p&gt;Github repo: &lt;a href=&#34;https://github.com/mrtanke/SINDy&#34;&gt;https://github.com/mrtanke/SINDy&lt;/a&gt;&lt;/p&gt;
+&lt;/aside&gt;
+&lt;p&gt;This blog is basically my hands-on notes while implementing &lt;strong&gt;SINDy (Sparse Identification of Nonlinear Dynamics)&lt;/strong&gt; as a small, understandable pipeline: generate data → build a candidate library → solve a sparse regression problem → sanity-check the discovered equation → then push it into harder settings like autoencoder and video-like data. The whole notebook is organized into three parts: (1) SINDy on ground-truth coordinates, (2) SINDy-Autoencoder, and (3) a bonus on high-dimensional “video” inputs.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Distg Series on UrbanLF</title>
       <link>http://localhost:1313/projects/2026-01-20-distg-series-on-urbanlf/</link>
       <pubDate>Tue, 20 Jan 2026 09:04:34 +0000</pubDate>
       <guid>http://localhost:1313/projects/2026-01-20-distg-series-on-urbanlf/</guid>
