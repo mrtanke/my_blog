@@ -4,15 +4,47 @@
 article aside,
 main aside {
   position: relative;
-  background: var(--aside-bg, #fbfbfb);
-  border-radius: 12px;
+  background: #f8fafc;
+  border-radius: 8px;
   padding: 1.25rem 1.5rem;
-  margin: 1.5rem 0;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(0, 0, 0, 0.04);
+  margin: 2rem 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border-left: 3px solid #94a3b8;
+  border-top: 1px solid rgba(148, 163, 184, 0.2);
+  border-right: 1px solid rgba(148, 163, 184, 0.15);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.15);
   color: var(--text, #222);
+  transition: all 0.2s ease;
 }
 
+.entry aside:hover,
+.post aside:hover,
+article aside:hover,
+main aside:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+/* Dark mode support */
+[data-theme="dark"] .entry aside,
+[data-theme="dark"] .post aside,
+[data-theme="dark"] article aside,
+[data-theme="dark"] main aside {
+  background: #1e293b;
+  border-left-color: #64748b;
+  border-top: 1px solid rgba(100, 116, 139, 0.2);
+  border-right: 1px solid rgba(100, 116, 139, 0.15);
+  border-bottom: 1px solid rgba(100, 116, 139, 0.15);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  color: var(--text, #e2e8f0);
+}
+
+[data-theme="dark"] .entry aside:hover,
+[data-theme="dark"] .post aside:hover,
+[data-theme="dark"] article aside:hover,
+[data-theme="dark"] main aside:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
 
 /* Make first bolded line behave like a title inside the aside */
 .entry aside strong:first-of-type,
@@ -20,14 +52,26 @@ main aside {
   display: block;
   font-weight: 700;
   margin-bottom: 0.6rem;
-  font-size: 1.03rem;
+  font-size: 1.05rem;
+  color: #475569;
 }
 
-.entry aside p:first-child { margin-top: 0; }
+[data-theme="dark"] .entry aside strong:first-of-type,
+[data-theme="dark"] .entry aside p strong:first-of-type {
+  color: #94a3b8;
+}
+
+.entry aside p:first-child { 
+  margin-top: 0;
+}
+
+.entry aside p:not(:first-child) {
+  margin: 0;
+}
 
 .entry aside ul,
 .entry aside ol {
-  margin: 0.4rem 0 0 1.1rem;
+  margin: 0.4rem 0 0 1.2rem;
 }
 
 .entry aside ul ul,
@@ -37,14 +81,52 @@ main aside {
   margin-left: 0.9rem;
 }
 
+/* Style links inside aside to be more prominent */
+.entry aside a,
+.post aside a,
+article aside a,
+main aside a {
+  color: #64748b;
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(100, 116, 139, 0.3);
+  transition: all 0.15s ease;
+}
+
+.entry aside a:hover,
+.post aside a:hover,
+article aside a:hover,
+main aside a:hover {
+  color: #475569;
+  border-bottom-color: #475569;
+}
+
+[data-theme="dark"] .entry aside a,
+[data-theme="dark"] .post aside a,
+[data-theme="dark"] article aside a,
+[data-theme="dark"] main aside a {
+  color: #94a3b8;
+  border-bottom-color: rgba(148, 163, 184, 0.3);
+}
+
+[data-theme="dark"] .entry aside a:hover,
+[data-theme="dark"] .post aside a:hover,
+[data-theme="dark"] article aside a:hover,
+[data-theme="dark"] main aside a:hover {
+  color: #cbd5e1;
+  border-bottom-color: #cbd5e1;
+}
+
 /* Slightly smaller text inside callouts for visual balance */
 .entry aside {
-  font-size: 0.99rem;
-  line-height: 1.6;
+  font-size: 0.98rem;
+  line-height: 1.65;
 }
 
 /* Responsive: keep padding tidy on small screens */
 @media (max-width: 640px) {
-  .entry aside { padding: 1rem; border-radius: 8px; }
-  .entry aside:before { left: 0.9rem; top: 0.7rem; }
+  .entry aside { 
+    padding: 1rem 1.25rem; 
+    border-radius: 6px; 
+  }
 }

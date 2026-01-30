@@ -108,3 +108,15 @@ Test result after fine-tuning are as following (per-scene disparity metrics. Low
 Per-scene disparity metrics. Lower is better for MSE; higher is better for BP metrics.
 
 The final output is a complete per-scene table, ready for comparison and error analysis in the next step. Overall, this work is about making the Distg pipeline **dataset-agnostic in practice**: keep the original H5 path intact for legacy experiments, add a clean UrbanLF-native loader, handle dataset quirks including cropping, divisibility and memory, and produce benchmark-aligned results for both SR and disparity, which set up the next phase: locating failure regions and improving edge and sharp structure behavior.
+
+1. Wang, Y., Wang, L., Wu, G., Yang, J., An, W., Yu, J., Guo, Y. **Disentangling Light Fields for Super-Resolution and Disparity Estimation.** *IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)*, 45(1):425–443, 2023. [https://doi.org/10.1109/TPAMI.2022.3152488](https://doi.org/10.1109/TPAMI.2022.3152488) 
+2. Wang, Y., Wang, L., Wu, G., Yang, J., An, W., Yu, J., Guo, Y. **Disentangling Light Fields for Super-Resolution and Disparity Estimation.** arXiv:2202.10603, 2022. [https://arxiv.org/abs/2202.10603](https://arxiv.org/abs/2202.10603)
+3. Wang, Y., Wang, L., Wu, G., Yang, J., An, W., Yu, J., Guo, Y. **DistgLF (DistgSSR / DistgASR / DistgDisp) project page.** [https://yingqianwang.github.io/DistgLF/](https://yingqianwang.github.io/DistgLF/)
+4. Wang, Y. (YingqianWang). **DistgSSR official implementation (GitHub).** [https://github.com/YingqianWang/DistgSSR](https://github.com/YingqianWang/DistgSSR)
+5. Wang, Y. (YingqianWang). **DistgASR official implementation (GitHub).** [https://github.com/YingqianWang/DistgASR](https://github.com/YingqianWang/DistgASR)
+6. Wang, Y. (YingqianWang). **DistgDisp official implementation (GitHub).** [https://github.com/YingqianWang/DistgDisp](https://github.com/YingqianWang/DistgDisp)
+7. Sheng, H., Cong, R., Yang, D., Chen, R., Wang, S., Cui, Z. **UrbanLF: A Comprehensive Light Field Dataset for Semantic Segmentation of Urban Scenes.** *IEEE Transactions on Circuits and Systems for Video Technology (TCSVT)*, 32(11):7880–7893, 2022. [https://doi.org/10.1109/TCSVT.2022.3187664](https://doi.org/10.1109/TCSVT.2022.3187664)
+8. HAWKEYE-Group. **UrbanLF dataset & benchmark repository (GitHub).** [https://github.com/HAWKEYE-Group/UrbanLF](https://github.com/HAWKEYE-Group/UrbanLF)
+9. Tan Ke (mrtanke). **UrbanLF paper notes.** [https://mrtanke.github.io/posts/2026-01-17-urbanlf-a-comprehensive-light-field-dataset-for-se/]
+10. Wang, Z., Bovik, A. C., Sheikh, H. R., Simoncelli, E. P. **Image Quality Assessment: From Error Visibility to Structural Similarity.** *IEEE Transactions on Image Processing*, 13(4):600–612, 2004. [https://doi.org/10.1109/TIP.2003.819861](https://doi.org/10.1109/TIP.2003.819861)
+11. Keys, R. G. **Cubic Convolution Interpolation for Digital Image Processing.** *IEEE Transactions on Acoustics, Speech, and Signal Processing*, 29(6):1153–1160, 1981. [https://doi.org/10.1109/TASSP.1981.1163711](https://doi.org/10.1109/TASSP.1981.1163711)
