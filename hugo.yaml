@@ -2,7 +2,6 @@ baseURL: https://mrtanke.github.io/
 languageCode: en-us
 title: Re:Log
 theme: ["PaperMod"]
-author: Tanke
 
 # Only enable tags taxonomy. This prevents Hugo from generating category archive pages.
 taxonomies:

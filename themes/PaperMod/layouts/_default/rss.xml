@@ -7,11 +7,9 @@
     {{- end }}
   {{- end }}
 {{- else }}
-  {{- if site.Author }}
-    {{- with site.Author.email }}
-      {{- $authorEmail = . }}
-      {{- warnf "The author key in site configuration is deprecated. Use params.author.email instead." }}
-    {{- end }}
+  {{- with site.Author.email }}
+    {{- $authorEmail = . }}
+    {{- warnf "The author key in site configuration is deprecated. Use params.author.email instead." }}
   {{- end }}
 {{- end }}
 
@@ -26,11 +24,9 @@
     {{- $authorName  = . }}
   {{- end }}
 {{- else }}
-  {{- if site.Author }}
-    {{- with site.Author.name }}
-      {{- $authorName = . }}
-      {{- warnf "The author key in site configuration is deprecated. Use params.author.name instead." }}
-    {{- end }}
+  {{- with site.Author.name }}
+    {{- $authorName = . }}
+    {{- warnf "The author key in site configuration is deprecated. Use params.author.name instead." }}
   {{- end }}
 {{- end }}
 
