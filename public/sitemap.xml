@@ -3,19 +3,19 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/posts/2026-02-15-a-survey-of-rag/</loc>
-    <lastmod>2026-02-18T15:32:22+00:00</lastmod>
+    <lastmod>2026-02-15T15:32:22+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2026-02-18T15:32:22+00:00</lastmod>
+    <lastmod>2026-02-15T15:32:22+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/rag/</loc>
-    <lastmod>2026-02-18T15:32:22+00:00</lastmod>
+    <lastmod>2026-02-15T15:32:22+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2026-02-18T15:32:22+00:00</lastmod>
+    <lastmod>2026-02-15T15:32:22+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2026-02-18T15:32:22+00:00</lastmod>
+    <lastmod>2026-02-15T15:32:22+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/projects/2026-01-22-sindy/</loc>
     <lastmod>2026-01-22T08:01:09+00:00</lastmod>
@@ -241,6 +241,8 @@
   </url><url>
     <loc>http://localhost:1313/posts/2025-10-01-attention-is-all-you-need/</loc>
     <lastmod>2025-10-01T00:36:58+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/exportblock-935c4405-005f-43af-9fa0-8fb1cd4b1271-part-1/a-survey-of-rag-300559a021ef80858d5beaa6f7d2070e/</loc>
   </url><url>
     <loc>http://localhost:1313/archives/</loc>
   </url><url>

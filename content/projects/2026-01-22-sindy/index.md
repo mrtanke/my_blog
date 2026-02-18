@@ -1,5 +1,5 @@
 ---
-title: 'Implementation Notes about Building SINDy'
+title: 'Implementation Notes about SINDy'
 date: 2026-01-22T08:01:09+00:00
 draft: false
 description: ''
