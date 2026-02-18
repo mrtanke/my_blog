@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Re:Log</description>
     <generator>Hugo -- 0.152.1</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Jan 2026 15:06:44 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 18 Feb 2026 15:32:22 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A Survey of RAG</title>
+      <link>http://localhost:1313/posts/2026-02-15-a-survey-of-rag/</link>
+      <pubDate>Wed, 18 Feb 2026 15:32:22 +0000</pubDate>
+      <guid>http://localhost:1313/posts/2026-02-15-a-survey-of-rag/</guid>
+      <description>Paper-reading notes: A Survey of RAG</description>
+    </item>
     <item>
       <title>UrbanLF: A Comprehensive Light Field Dataset for Semantic Segmentation of Urban Scenes</title>
       <link>http://localhost:1313/posts/2026-01-17-urbanlf-a-comprehensive-light-field-dataset-for-se/</link>
