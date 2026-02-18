@@ -6,14 +6,16 @@
     <description>Recent content in Posts on Re:Log</description>
     <generator>Hugo -- 0.152.1</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Feb 2026 15:32:22 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 18 Feb 2026 20:37:22 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>A Survey of RAG</title>
-      <link>http://localhost:1313/posts/2026-02-15-a-survey-of-rag/</link>
-      <pubDate>Wed, 18 Feb 2026 15:32:22 +0000</pubDate>
-      <guid>http://localhost:1313/posts/2026-02-15-a-survey-of-rag/</guid>
-      <description>Paper-reading notes: A Survey of RAG</description>
+      <link>http://localhost:1313/posts/2026-02-18-a-survey-of-rag/</link>
+      <pubDate>Wed, 18 Feb 2026 20:37:22 +0000</pubDate>
+      <guid>http://localhost:1313/posts/2026-02-18-a-survey-of-rag/</guid>
+      <description>&lt;p&gt;This post is primarily based on the survey &lt;a href=&#34;https://link.springer.com/article/10.1007/s41019-025-00335-5&#34;&gt;“Retrieval-Augmented Generation for AI-Generated Content: A Survey”&lt;/a&gt;. I presents retrieval-augmented generation (RAG) in six parts: &lt;strong&gt;background&lt;/strong&gt;, &lt;strong&gt;method&lt;/strong&gt;, &lt;strong&gt;enhancement&lt;/strong&gt;, &lt;strong&gt;applications&lt;/strong&gt;, &lt;strong&gt;outlook&lt;/strong&gt;, and &lt;strong&gt;takeaways&lt;/strong&gt;.&lt;/p&gt;
+&lt;h1 id=&#34;background&#34;&gt;Background&lt;/h1&gt;
+&lt;p&gt;In recent years, we’ve seen a rapid surge in Artificial Intelligence Generated Content (AIGC), driven by large generative models that can produce text, code, images and even videos (&lt;a href=&#34;https://link.springer.com/article/10.1007/s41019-025-00335-5&#34;&gt;Zhao et al. 2026&lt;/a&gt;). For text and code, widely used examples including GPT-style models and Anthropic’s Claude family (&lt;a href=&#34;https://arxiv.org/abs/2303.08774&#34;&gt;Achiam et al. 2023&lt;/a&gt;, &lt;a href=&#34;https://www-cdn.anthropic.com/de8ba9b01c9ab7cbabf5c33b80b7bbc618857627/Model_Card_Claude_3.pdf&#34;&gt;Anthropic 2024&lt;/a&gt;). For images, modern systems are often powered by diffusion-based text-image generation, including latent diffusion models (&lt;a href=&#34;https://arxiv.org/abs/2102.12092&#34;&gt;Ramesh et al. 2021&lt;/a&gt;, &lt;a href=&#34;https://arxiv.org/abs/2112.10752&#34;&gt;Rombach et al. 2022&lt;/a&gt;). For video, OpenAI’s Sora is a prominent example of large-scale text-to-video generation (&lt;a href=&#34;https://openai.com/index/video-generation-models-as-world-simulators/&#34;&gt;OpenAI 2024&lt;/a&gt;).&lt;/p&gt;</description>
     </item>
     <item>
       <title>UrbanLF: A Comprehensive Light Field Dataset for Semantic Segmentation of Urban Scenes</title>

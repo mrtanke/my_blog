@@ -1,6 +1,6 @@
 ---
 title: 'A Survey of RAG'
-date: 2026-02-15T15:32:22+00:00
+date: 2026-02-18T20:37:22+00:00
 draft: false
 description: ''
 tag: 'Posts'
@@ -628,6 +628,7 @@ Finally, we can say, RAG is a good tool to improve the LLMs. Most importantly, R
 [4] Vladimir Karpukhin, et al. ["Dense Passage Retrieval for Open-Domain Question Answering."](https://arxiv.org/abs/2004.04906). Conference on Empirical Methods in Natural Language Processing 2020.
 
 [5] Akari Asai, et al. ["Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection."](https://arxiv.org/abs/2310.11511). International Conference on Learning Representations 2023.
+
 [6] Yunfan Gao, et al. ["Retrieval-Augmented Generation for Large Language Models: A Survey."](https://arxiv.org/abs/2312.10997). arXiv preprint arXiv:2312.10997 (2023).
 
 [7] Jacob Devlin, et al. ["BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding."](https://arxiv.org/abs/1810.04805). North American Chapter of the Association for Computational Linguistics 2019.
@@ -637,6 +638,7 @@ Finally, we can say, RAG is a good tool to improve the LLMs. Most importantly, R
 [9] Alec Radford, et al. ["Learning Transferable Visual Models From Natural Language Supervision."](https://arxiv.org/abs/2103.00020). International Conference on Machine Learning 2021.
 
 [10] Lee Xiong, et al. ["Approximate Nearest Neighbor Negative Contrastive Learning for Dense Text Retrieval."](https://arxiv.org/abs/2007.00808). International Conference on Learning Representations 2020.
+
 [11] Wu Li, et al. ["Learning Balanced Tree Indexes for Large-Scale Vector Retrieval."](https://dl.acm.org/doi/10.1145/3580305.3599406). Knowledge Discovery and Data Mining 2023.
 
 [12] Yury Malkov, et al. ["Efficient and Robust Approximate Nearest Neighbor Search Using Hierarchical Navigable Small World Graphs."](https://arxiv.org/abs/1603.09320). IEEE Transactions on Pattern Analysis and Machine Intelligence 2016.
