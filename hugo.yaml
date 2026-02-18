@@ -29,8 +29,7 @@ outputs:
 
 params:
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
-  author:
-    name: "Tanke"
+  author: ""
 
   defaultTheme: auto
   disableThemeToggle: false
