@@ -6,7 +6,7 @@ description: 'Paper-reading notes: From Tokens To Thoughts: How LLMs And Humans 
 ShowWordCount: true
 ShowReadingTime: false
 tags:
-  - 'reasnoing'
+  - 'reasoning'
 ---
 
 
