@@ -21,7 +21,7 @@ The repository is here: [https://github.com/mrtanke/robotics-transformer](https:
 
 The paper authors tried to answer a question: **Can a transformer policy be large, general and still fast enough for real-time robot control?** Obviously, the Robotics Transformer is based on the transformer framework ([Vaswani et al., 2017](https://arxiv.org/abs/1706.03762)) because transformer is a high-capacity sequence model, which makes it a natural candidate for learning general robot behaviours if we can train them on sufficiently large and diverse datasets. In original paper, it mentioned: The largest dataset for training contains over **130k individual demonstrations (trajectories)** constituting over **700 distinct task** instructions using a large variety of objects! That’s pretty impressive. 
 
-The challenge is speed. A naïve complete transformer over raw images and instructions would be far too slow for closed-loop control. RT-1 solves this by using a **decode-only Transformer** as the policy backbone. The model predicts the discretized action tokens with the fixed 256 bins per action dimension rather than continuous values, so the learning objectives become a straightforward classification problem. To speed up training, all the actions are generated in parallel in the causal attentions. Also, the input images and instructions are compressed to **48 tokens** as the Transformer input, it’s small enough to keep inference fast. And the images history can be reused.
+The challenge is speed. A naïve complete transformer over raw images and instructions would be far too slow for closed-loop control. RT-1 solves this by using a **decode-only Transformer** as the policy backbone. The model predicts the discretized action tokens with the fixed 256 bins per action dimension rather than continuous values, so the learning objectives become a straightforward classification problem. To speed up training, all the actions are generated in parallel in the causal attentions. Also, the input images and instructions are compressed to **8 tokens per image** (via TokenLearner), and the Transformer input uses a **per-timestep interleaved** structure: `[obs_1][act_1][obs_2][act_2]...[obs_T][act_T]`, where each timestep contributes 8 observation tokens + 11 action tokens = 19 tokens, for a total of 6 × 19 = **114 tokens**. This is small enough to keep inference fast, and the images history can be reused.
 
 The policy design of RT-1 follows the clean end-to-end VLA pipeline: the input images and intruction are fused as an embedding to feed into the Transformer, the tokenized actions are output. The training is a behaviour cloning process, minimizing the difference between the predicted action tokens and the demostrated action tokens.
 
@@ -37,7 +37,8 @@ A single sample has the following shapes:
 
 - `images`: `(history_len, 3, image_size, image_size)`
 - `instruction_emb`: `(instruction_dims,)`
-- `action_tokens`: `(action_dims,)`
+- `action_tokens`: `(action_dims,)` — the target for the current timestep
+- `action_tokens_history`: `(history_len, action_dims)` — ground-truth actions for all T timesteps in the history window
 
 The default settings live in the class `RoboticsTransformerConfig`:
 
@@ -183,15 +184,21 @@ def forward(self, x: torch.Tensor) -> torch.Tensor:
 
 ## 5. Policy Integration
 
-I wrap the whole RT-1 pipeline into a single `robotic_transformerPolicy` module. Given a **6-frame image history** and a **512-d instruction embedding**, the policy first tokenizes each frame with a **FiLM-conditioned EfficientNet-B3** to produce **81 tokens per frame**, then compresses them with **TokenLearner** to **8 tokens per frame**, resulting in **48 observation tokens** for the Transformer. 
+I wrap the whole RT-1 pipeline into a single `robotic_transformerPolicy` module. Given a **6-frame image history** and a **512-d instruction embedding**, the policy first tokenizes each frame with a **FiLM-conditioned EfficientNet-B3** to produce **81 tokens per frame**, then compresses them with **TokenLearner** to **8 tokens per frame**.
 
-During training, I append **real action input tokens** (BOS + previous action tokens) to the observation tokens and feed the full sequence into a **decoder-only Transformer** with a causal mask. The model outputs logits for the last **11 action slots**, each predicting a **256-way discrete bin**. 
+Following the official implementation, the Transformer input uses a **per-timestep interleaved** concatenation rather than a single merged `[obs][act]` block. Each timestep contributes its own `[obs_t][act_t]` group (8 + 11 = 19 tokens), and the full sequence is:
 
-For inference, there is a simple autoregressive `generate_action_tokens()` loop that samples the 11 action tokens step by step from the Transformer’s output distribution.
+$$
+[\text{obs}_1][\text{act}_1][\text{obs}_2][\text{act}_2]\dots[\text{obs}_T][\text{act}_T]
+$$
+
+with $T \times 19 = 6 \times 19 = 114$ total tokens. During training, past action tokens (timesteps 1 to T−1) are ground-truth context, and the current timestep's action tokens are **teacher-forced** (BOS + shifted target) so the model can predict all 11 action tokens in parallel under the causal mask.
+
+For inference, a simple autoregressive `generate_action_tokens()` loop builds the past context `[obs_1][act_1]...[obs_{T-1}][act_{T-1}][obs_T]` once, then samples the 11 action tokens step by step from the Transformer's output distribution.
 
 # Training
 
-For training, I keep everything as simple as possible and treat RT-1 as a **behavior cloning** problem on **discretized action tokens**. Each batch provides `images` (6-frame history), `instruction_emb` (512-d), and `action_tokens` (11 integers). The policy outputs `logits` of shape `(B, 11, 256)`, and training minimizes a standard **cross-entropy loss** between predicted logits and the ground-truth action tokens. The training loop uses **AdamW**, applies **gradient clipping** for stability. 
+For training, I keep everything as simple as possible and treat RT-1 as a **behavior cloning** problem on **discretized action tokens**. Each batch provides `images` (6-frame history), `instruction_emb` (512-d), `action_tokens_history` (per-timestep ground-truth actions for the interleaved context), and `action_tokens` (11 target integers for the current timestep). The policy outputs `logits` of shape `(B, 11, 256)`, and training minimizes a standard **cross-entropy loss** between predicted logits and the ground-truth action tokens. The training loop uses **AdamW**, applies **gradient clipping** for stability.
 
 Since the dataset is synthetic, the goal here isn’t to reach meaningful real-world performance, it’s to verify that the full pipeline (tokenizers → transformer → loss) is wired correctly and can train end-to-end without shape or masking bugs.
 
