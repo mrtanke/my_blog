@@ -8,6 +8,7 @@ ShowReadingTime: false
 tags:
 - embodied-intelligence
 - vision-language-action
+- robotics
 ---
 
 
