@@ -1,6 +1,6 @@
 ---
 title: 'A Survey of RAG'
-date: 2026-02-15T20:37:22+00:00
+date: 2025-10-19T20:37:22+00:00
 draft: false
 description: ''
 tag: 'Posts'
@@ -11,11 +11,11 @@ tags:
 ---
 
 
-This post is primarily based on the survey [“Retrieval-Augmented Generation for AI-Generated Content: A Survey”](https://link.springer.com/article/10.1007/s41019-025-00335-5). I presents retrieval-augmented generation (RAG) in six parts: **background**, **method**, **enhancement**, **applications**, **outlook**, and **takeaways**.
+This post is primarily based on the survey [“Retrieval-Augmented Generation for AI-Generated Content: A Survey”](https://arxiv.org/pdf/2402.19473). I presents retrieval-augmented generation (RAG) in six parts: **background**, **method**, **enhancement**, **applications**, **outlook**, and **takeaways**.
 
 # Background
 
-In recent years, we’ve seen a rapid surge in Artificial Intelligence Generated Content (AIGC), driven by large generative models that can produce text, code, images and even videos ([Zhao et al. 2026](https://link.springer.com/article/10.1007/s41019-025-00335-5)). For text and code, widely used examples including GPT-style models and Anthropic’s Claude family ([Achiam et al. 2023](https://arxiv.org/abs/2303.08774), [Anthropic 2024](https://www-cdn.anthropic.com/de8ba9b01c9ab7cbabf5c33b80b7bbc618857627/Model_Card_Claude_3.pdf)). For images, modern systems are often powered by diffusion-based text-image generation, including latent diffusion models ([Ramesh et al. 2021](https://arxiv.org/abs/2102.12092), [Rombach et al. 2022](https://arxiv.org/abs/2112.10752)). For video, OpenAI’s Sora is a prominent example of large-scale text-to-video generation ([OpenAI 2024](https://openai.com/index/video-generation-models-as-world-simulators/)). 
+In recent years, we’ve seen a rapid surge in Artificial Intelligence Generated Content (AIGC), driven by large generative models that can produce text, code, images and even videos ([Zhao et al. 2024](https://arxiv.org/abs/2402.19473)). For text and code, widely used examples including GPT-style models and Anthropic’s Claude family ([Achiam et al. 2023](https://arxiv.org/abs/2303.08774), [Anthropic 2024](https://www-cdn.anthropic.com/de8ba9b01c9ab7cbabf5c33b80b7bbc618857627/Model_Card_Claude_3.pdf)). For images, modern systems are often powered by diffusion-based text-image generation, including latent diffusion models ([Ramesh et al. 2021](https://arxiv.org/abs/2102.12092), [Rombach et al. 2022](https://arxiv.org/abs/2112.10752)). For video, OpenAI’s Sora is a prominent example of large-scale text-to-video generation ([OpenAI 2024](https://openai.com/index/video-generation-models-as-world-simulators/)). 
 
 These models often look impressive when requirements are loose, but they can fail in very common scenario: we ask a pure LLM to help review for a final exam, yet the exam topics come strictly from the course materials of several PDFs, and the model was not trained on that private material, so it’ll produce a generic answer that misses the specific definitions, theorems, or phrasing our professor expects. So what we can do? We can use **Retrieval Augmented Generation (RAG)** to address this. We treat the course materials as an external knowledge source, so at each question time, the system first **retrieves** the most relevant passages from an indexed document store and then feeds those passages as context into the LLM to **generate** an answer grounded in the course text ([Lewis et al. 2020](https://arxiv.org/abs/2005.11401), [Karpukhin et al. 2020](https://arxiv.org/abs/2004.04906)). 
 
@@ -23,7 +23,7 @@ We can see, now the whole process becomes **non-parametric** and not a huge work
 
 # Method
 
-Basically, the entire RAG system consists of two core modules: the **retriever** and the **generator**, where the **retriever** searches for relevant information from the data store and **generator** that conditions on the query plus retrieved evidence to produce the final content ([Zhao et al. 2026](https://link.springer.com/article/10.1007/s41019-025-00335-5)). 
+Basically, the entire RAG system consists of two core modules: the **retriever** and the **generator**, where the **retriever** searches for relevant information from the data store and **generator** that conditions on the query plus retrieved evidence to produce the final content ([Zhao et al. 2024](https://arxiv.org/abs/2402.19473)). 
 
 ![image.png](image.png)
 
@@ -619,7 +619,7 @@ Finally, we can say, RAG is a good tool to improve the LLMs. Most importantly, R
 
 # References
 
-[1] Penghao Zhao, et al. ["Retrieval-Augmented Generation for AI-Generated Content: A Survey."](https://link.springer.com/article/10.1007/s41019-025-00335-5). Data Science and Engineering 2026.
+[1] Penghao Zhao, et al. ["Retrieval-Augmented Generation for AI-Generated Content: A Survey."](https://arxiv.org/pdf/2402.19473). arXiv preprint arXiv:2402.19473 (2024).
 
 [2] OpenAI Josh Achiam, et al. ["GPT-4 Technical Report."](https://arxiv.org/abs/2303.08774). arXiv preprint arXiv:2303.08774 (2023).
 
