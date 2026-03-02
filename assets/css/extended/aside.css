@@ -26,10 +26,10 @@ main aside:hover {
 }
 
 /* Dark mode support */
-[data-theme="dark"] .entry aside,
-[data-theme="dark"] .post aside,
-[data-theme="dark"] article aside,
-[data-theme="dark"] main aside {
+.dark .entry aside,
+.dark .post aside,
+.dark article aside,
+.dark main aside {
   background: #1e293b;
   border-left-color: #64748b;
   border-top: 1px solid rgba(100, 116, 139, 0.2);
@@ -39,10 +39,10 @@ main aside:hover {
   color: var(--text, #e2e8f0);
 }
 
-[data-theme="dark"] .entry aside:hover,
-[data-theme="dark"] .post aside:hover,
-[data-theme="dark"] article aside:hover,
-[data-theme="dark"] main aside:hover {
+.dark .entry aside:hover,
+.dark .post aside:hover,
+.dark article aside:hover,
+.dark main aside:hover {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
@@ -58,10 +58,10 @@ main aside :not(pre) > code {
   padding: 0.1em 0.35em;
 }
 
-[data-theme="dark"] .entry aside :not(pre) > code,
-[data-theme="dark"] .post aside :not(pre) > code,
-[data-theme="dark"] article aside :not(pre) > code,
-[data-theme="dark"] main aside :not(pre) > code {
+.dark .entry aside :not(pre) > code,
+.dark .post aside :not(pre) > code,
+.dark article aside :not(pre) > code,
+.dark main aside :not(pre) > code {
   color: #e2e8f0;
   background: #334155;
   border-color: #475569;
@@ -77,8 +77,8 @@ main aside :not(pre) > code {
   color: #475569;
 }
 
-[data-theme="dark"] .entry aside strong:first-of-type,
-[data-theme="dark"] .entry aside p strong:first-of-type {
+.dark .entry aside strong:first-of-type,
+.dark .entry aside p strong:first-of-type {
   color: #94a3b8;
 }
 
@@ -122,18 +122,18 @@ main aside a:hover {
   border-bottom-color: #475569;
 }
 
-[data-theme="dark"] .entry aside a,
-[data-theme="dark"] .post aside a,
-[data-theme="dark"] article aside a,
-[data-theme="dark"] main aside a {
+.dark .entry aside a,
+.dark .post aside a,
+.dark article aside a,
+.dark main aside a {
   color: #94a3b8;
   border-bottom-color: rgba(148, 163, 184, 0.3);
 }
 
-[data-theme="dark"] .entry aside a:hover,
-[data-theme="dark"] .post aside a:hover,
-[data-theme="dark"] article aside a:hover,
-[data-theme="dark"] main aside a:hover {
+.dark .entry aside a:hover,
+.dark .post aside a:hover,
+.dark article aside a:hover,
+.dark main aside a:hover {
   color: #cbd5e1;
   border-bottom-color: #cbd5e1;
 }

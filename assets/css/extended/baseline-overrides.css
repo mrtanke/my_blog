@@ -56,3 +56,62 @@ body {
 .post-content a {
   color: inherit;
 }
+
+/* iPad and smaller: avoid fixed logo overlap and tighten heading scale */
+@media (max-width: 1024px) {
+  .nav {
+    justify-content: space-between;
+  }
+
+  .logo {
+    position: static;
+    left: auto;
+    top: auto;
+  }
+
+  .post-title {
+    font-size: 32px;
+  }
+
+  .post-content h1 {
+    margin: 24px auto 18px;
+    font-size: 26px;
+  }
+
+  .post-content h2 {
+    margin: 20px auto 14px;
+    font-size: 22px;
+  }
+}
+
+/* Phone: further reduce typography and keep content comfortably within viewport */
+@media (max-width: 768px) {
+  body {
+    font-size: 15px;
+  }
+
+  .post-title {
+    font-size: 28px;
+  }
+
+  .post-content h1 {
+    margin: 20px auto 14px;
+    font-size: 24px;
+  }
+
+  .post-content h2 {
+    margin: 18px auto 12px;
+    font-size: 20px;
+  }
+
+  .post-content h3 {
+    font-size: 17px;
+  }
+
+  .post-content table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
