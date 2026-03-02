@@ -9,6 +9,7 @@ tags:
 - vision-language-action
 - vision-language-model
 - embodied-intelligence
+- robotics
 ---
 
 
