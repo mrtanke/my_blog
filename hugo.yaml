@@ -1,6 +1,6 @@
 baseURL: https://mrtanke.github.io/
 languageCode: en-us
-title: Re:Log
+title: R:Log
 theme: ["PaperMod"]
 
 # Only enable tags taxonomy. This prevents Hugo from generating category archive pages.
@@ -48,13 +48,13 @@ params:
   # comments: false
 
   homeInfoParams:
-    Title: "👋 Welcome to Re:Log"
+    Title: "👋 Welcome to R:Log"
     Content: >
-      Hi, this is Tanke, I'm studying data science at Heidelberg University. 
+      Hi, this is **Tan Ke**, I'm currently studying data science at [Heidelberg University](https://www.uni-heidelberg.de/).
 
       - Documenting my learning notes in this blog since 2025 📝 💻. 
 
-      - I'm currently exploring the frontiers of Generative AI and Embodied Intelligence 🦾. 
+      - I'm interested in exploring the frontiers of Generative AI and Embodied Intelligence 🦾. 
 
   socialIcons:
     - name: github

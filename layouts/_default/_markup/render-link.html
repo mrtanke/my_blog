@@ -1,0 +1,15 @@
+{{- $destination := .Destination -}}
+{{- $baseURL := strings.TrimSuffix "/" site.BaseURL -}}
+{{- $baseURLNoScheme := replaceRE "^https?:" "" $baseURL -}}
+{{- $isAbsolute := or (hasPrefix $destination "http://") (hasPrefix $destination "https://") (hasPrefix $destination "//") -}}
+{{- $isInternalAbsolute := or
+  (eq $destination $baseURL)
+  (hasPrefix $destination (printf "%s/" $baseURL))
+  (eq $destination $baseURLNoScheme)
+  (hasPrefix $destination (printf "%s/" $baseURLNoScheme))
+-}}
+{{- $isExternal := and $isAbsolute (not $isInternalAbsolute) -}}
+<a href="{{ $destination | safeURL }}"
+  {{- with .Title }} title="{{ . }}"{{ end -}}
+  {{- if $isExternal }} target="_blank" rel="noopener noreferrer"{{ end -}}
+>{{ .Text | safeHTML }}</a>

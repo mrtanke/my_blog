@@ -50,3 +50,9 @@ body {
   left: calc((100vw - var(--main-width) - var(--gap) * 2) / 2 - 138px);
   top: 0;
 }
+
+/* Keep inline links the same color as surrounding reading text */
+.entry-content a,
+.post-content a {
+  color: inherit;
+}
