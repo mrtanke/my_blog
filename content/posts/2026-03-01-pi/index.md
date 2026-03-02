@@ -1,15 +1,16 @@
 ---
 title: 'π Series (π₀, π₀.₅)'
-date: 2026-03-01T20:38:17+00:00
+date: 2026-03-01T09:30:09+00:00
 draft: false
 description: ''
 tag: 'Posts'
 ShowWordCount: true
 ShowReadingTime: false
 tags:
-  - 'vision-language-action'
-  - 'robotics'
-  - 'embodied-intelligence'
+  - robotics
+  - embodied-intelligence
+  - vision-language-action
+  - attention
 ---
 
 
@@ -64,7 +65,7 @@ Instead of predicting actions **autoregressively** (one token at a time) with a 
 
 ![image.png](43a6cf7b-56fb-430c-a8dd-6ee420645227.png)
 
-The **transformer VLM backbone** is [**PaliGemma**](https://arxiv.org/abs/2407.07726), which ****includes a vision encoder **SigLIP** and a language model **Gemma**.
+The **transformer VLM backbone** is [**PaliGemma**](https://arxiv.org/abs/2407.07726), which includes a vision encoder **SigLIP** and a language model **Gemma**.
 
 For this module, Images with different viewpoints in one timestep are embed into the same embedding space as language tokens, so the model can jointly process **vision + language**. 
 
@@ -137,13 +138,59 @@ Training is explicitly split into **pre-training** and **post-training**.
 
 **Post-training** then fine-tunes on **smaller, higher-quality data** to learn **fluent and reliable** execution strategies for downstream tasks. 
 
-# π₀.₅
+# **FAST: Efficient Robot Action Tokenization**
 
 <aside>
 
 blog link: [π₀.₅: a VLA with Open-World Generalization](https://www.pi.website/blog/pi05)
 
 paper link: [π₀.₅: a Vision-Language-Action Model with Open-World Generalization](https://arxiv.org/abs/2504.16054)
+
+</aside>
+
+FAST is an **action tokenizer** that turns **a continuous action chunk** into **a sequence of discrete tokens**, allowing VLA policies to be trained with the same next-token, autoregressive training recipe used in language models. 
+
+After compressed, a chunk might become **tens of tokens**, not one token per timestep.
+
+<aside>
+
+Tiny example: a 1-second `reach → grasp → lift` action chunk becomes something like `[A17, A05, A92, …]` tokens, which the model predicts one by one, then decodes back into smooth continuous actions. 
+
+</aside>
+
+FAST aims to combine the best of both worlds: (a) **diffusion-like dexterity** for fine manipulation, and (b) the training efficiency of token-based **autoregressive transformers**.
+
+## Core method
+
+![image.png](4bb23fb8-20b8-4748-a0ea-d040a559ff19.png)
+
+Given an action chunk $a_{t:t+H}$, FAST tokenizes it with a compression-style pipeline:
+
+1. **Normalize** the action chunk → rescale every action dimension (joints/axes) to a standard range (dimension-wise scaling).
+2. **DCT (Discrete Cosine Transform)** over time → convert each action dimension into several **frequency components**, like representing a song using bass (low freq) + treble (high freq). Most energy is in the bass.
+    - low-frequency = the main smooth movement (“move forward steadily”)
+    - high-frequency = little corrections (“tiny adjustments”)
+3. **Quantize** the DCT coefficients → a sparse-ish frequency matrix, so a real number is mapped to an integer bin using a scale. 
+4. **Flatten** coefficients in a **low-frequency-first** order.
+5. **BPE compression (Byte Pair Encoding)** → produce **dense compressed action tokens**, typically **~30–60 tokens per chunk** (**10× fewer** than prior tokenizations). 
+
+Now actions look like language: a short token sequence that an autoregressive transformer can predict with cross-entropy.
+
+## Pluging FAST into π0
+
+PI reports that combining FAST with the π0 backbone/data yields **π0-FAST**: an **autoregressive** generalist policy that can handle **dexterous tasks** where standard discretization fails, and trains **up to ~5× faster** than diffusion-based π0 (with almost similar performance in their comparisons).
+
+![image.png](3451168b-5910-4343-91d4-740708bea0c0.png)
+
+# π₀.₅
+
+π₀ didn't generalize well, and the developers likely recognized this gap. π₀.₅ is designed to improve open-world generalization by (1) co-training on a broader and more diverse mixture of data sources, and (2) introducing a hierarchical inference scheme where the model first predicts a textual semantic subtask and then generates low-level actions conditioned on that subtask, strengthening long-horizon reasoning and execution.
+
+<aside>
+
+blog link: [FAST: Efficient Robot Action Tokenization](https://www.pi.website/research/fast)
+
+paper link: [FAST: Efficient Action Tokenization for Vision-Language-Action Models](https://arxiv.org/abs/2501.09747)
 
 </aside>
 
@@ -170,7 +217,7 @@ In this paper, they leverage this observation to design a co-training framework 
 
 π₀.₅ builds on π₀ with several improvements: 
 
-π₀ ****mostly learns from **“what the robot did”**. π₀.₅ additionally learns from **“what should happen next”** and **“what things mean”** even when no robot actions are given. Concretely, π₀.₅ extends in two big ways:
+π₀ mostly learns from **“what the robot did”**. π₀.₅ additionally learns from **“what should happen next”** and **“what things mean”** even when no robot actions are given. Concretely, π₀.₅ extends in two big ways:
 
 1. **Adds new supervision sources beyond robot action imitation**
     
@@ -283,6 +330,15 @@ They optimize a combined loss:
 - **Cross-entropy** over text tokens (this includes FAST action tokens when actions are tokenized)
 - **Flow matching MSE** for the action expert’s continuous outputs with a trade-off weight $\alpha$
 
+<aside>
+
+**Positioning:**
+
+- **π0:** continuous actions via flow matching (strong dexterity; slower training)
+- **FAST / π0-FAST:** discrete action tokens via DCT+BPE compression (fast autoregressive training; still dexterous)
+- **π0.5:** combines discrete-token pretraining (FAST-style) with a continuous action expert for fast real-time control
+</aside>
+
 # Reference
 
 [1] Physical Intelligence, “Physical Intelligence (π).” [Online]. Available: [https://www.pi.website/](https://www.pi.website/). [Accessed: Mar. 1, 2026].
@@ -299,8 +355,10 @@ They optimize a combined loss:
 
 [7] C. Zhou *et al*., “Transfusion: Predict the Next Token and Diffuse Images with One Multi-Modal Model,” *arXiv preprint* arXiv:2408.11039, 2024.
 
-[8] Physical Intelligence, “π₀.₅: a VLA with Open-World Generalization,” Apr. 22, 2025. [Online]. Available: [https://www.pi.website/blog/pi05](https://www.pi.website/blog/pi05). [Accessed: Mar. 1, 2026].
+[8] Physical Intelligence, “FAST: Efficient Robot Action Tokenization,” Jan. 16, 2025. [Online]. Available: [https://www.pi.website/research/fast](https://www.pi.website/research/fast?utm_source=chatgpt.com). [Accessed: Mar. 2, 2026].
 
-[9] Physical Intelligence *et al*., “π₀.₅: a Vision-Language-Action Model with Open-World Generalization,” *arXiv preprint* arXiv:2504.16054, 2025.
+[9] K. Pertsch *et al*., “FAST: Efficient Action Tokenization for Vision-Language-Action Models,” *arXiv preprint* arXiv:2501.09747, 2025.
 
-[10] K. Pertsch *et al*., “FAST: Efficient Action Tokenization for Vision-Language-Action Models,” *arXiv preprint* arXiv:2501.09747, 2025.
+[10] Physical Intelligence, “π₀.₅: a VLA with Open-World Generalization,” Apr. 22, 2025. [Online]. Available: [https://www.pi.website/blog/pi05](https://www.pi.website/blog/pi05). [Accessed: Mar. 1, 2026].
+
+[11] Physical Intelligence *et al*., “π₀.₅: a Vision-Language-Action Model with Open-World Generalization,” *arXiv preprint* arXiv:2504.16054, 2025.

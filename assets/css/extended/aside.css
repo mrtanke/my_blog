@@ -46,6 +46,27 @@ main aside:hover {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
+/* Keep inline code readable inside asides */
+.entry aside :not(pre) > code,
+.post aside :not(pre) > code,
+article aside :not(pre) > code,
+main aside :not(pre) > code {
+  color: #334155;
+  background: #e2e8f0;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+
+[data-theme="dark"] .entry aside :not(pre) > code,
+[data-theme="dark"] .post aside :not(pre) > code,
+[data-theme="dark"] article aside :not(pre) > code,
+[data-theme="dark"] main aside :not(pre) > code {
+  color: #e2e8f0;
+  background: #334155;
+  border-color: #475569;
+}
+
 /* Make first bolded line behave like a title inside the aside */
 .entry aside strong:first-of-type,
 .entry aside p strong:first-of-type {
