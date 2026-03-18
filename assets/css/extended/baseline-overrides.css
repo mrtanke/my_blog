@@ -51,10 +51,45 @@ body {
   top: 0;
 }
 
-/* Keep inline links the same color as surrounding reading text */
+/* Make inline links clearly identifiable and interactive */
 .entry-content a,
 .post-content a {
-  color: inherit;
+  color: #1f6fd2;
+}
+
+.entry-content a:hover,
+.post-content a:hover,
+.entry-content a:focus-visible,
+.post-content a:focus-visible {
+  color: #e0b000;
+}
+
+/* Home hero: place intro copy and selfie in a left-right layout */
+.home-info .home-info-has-image {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(160px, 22vw, 220px);
+  align-items: center;
+  gap: clamp(20px, 4vw, 40px);
+}
+
+.home-info .entry-header h1 {
+  font-size: clamp(1.8rem, 3.6vw, 2.2rem);
+  line-height: 1.2;
+}
+
+.home-info .home-info-media {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.home-info .home-info-selfie {
+  width: 100%;
+  max-width: 220px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
 }
 
 /* iPad and smaller: avoid fixed logo overlap and tighten heading scale */
@@ -82,12 +117,33 @@ body {
     margin: 20px auto 14px;
     font-size: 22px;
   }
+
+  .home-info .entry-header h1 {
+    font-size: clamp(1.7rem, 4vw, 2rem);
+  }
 }
 
 /* Phone: further reduce typography and keep content comfortably within viewport */
 @media (max-width: 768px) {
   body {
     font-size: 15px;
+  }
+
+  .home-info .home-info-has-image {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .home-info .home-info-media {
+    justify-content: flex-start;
+  }
+
+  .home-info .home-info-selfie {
+    max-width: 150px;
+  }
+
+  .home-info .entry-header h1 {
+    font-size: clamp(1.5rem, 7vw, 1.8rem);
   }
 
   .post-title {

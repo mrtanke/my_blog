@@ -50,13 +50,19 @@ params:
   # comments: false
 
   homeInfoParams:
-    Title: "👋 Welcome to R:Log"
+    Title: "Tan Ke"
     Content: >
-      Hi, this is **Tan Ke**, I'm currently studying data and computer science at [Heidelberg University](https://www.uni-heidelberg.de/).
+      I'm a second-year Data and Computer Science Master student at [Heidelberg University,](https://www.uni-heidelberg.de/) supervised by [Sara.](https://scholar.google.de/citations?user=_uZR6pEAAAAJ&hl=de)
+      Since 2025, I have been documenting my studying and research notes on this blog.
+      I am broadly interested in Robotics, with a current focus on world models.
+      
+      - -
 
-      - Documenting my learning notes in this blog since 2025 📝 💻. 
+      - I am looking for master thesis opportunities in embodied intelligence, Vision-Language-Action (VLA) models, and world models.
+      If you are interested in collaboration or have relevant opportunities to share, please feel free to reach out by [email.](mailto:mrtanke2024@gmail.com)
 
-      - I'm interested in exploring the frontiers of Generative AI and Embodied Intelligence 🦾. 
+    Image: "/selfie.png"
+    ImageAlt: "Portrait photo of Tan Ke"
 
   socialIcons:
     - name: github
