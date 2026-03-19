@@ -50,22 +50,44 @@ def unzip_notion() -> Path:
 
 
 def find_md_and_assets(folder: Path):
-    """Find the first .md file and the first directory in the root of the extracted folder.
+    """Find the markdown file and its related assets folder in extracted Notion exports.
 
-    Assumes Notion export contains one markdown file and one assets folder at the root.
+    Supports older root-level exports and newer nested structures like:
+    - <extract-root>/ExportBlock-...-Part-1.zip
+      -> Private & Shared/<title with uuid>.md
+      -> Private & Shared/<title>/<asset files>
     """
-    md_files = list(folder.glob("*.md"))
+
+    def _title_without_uuid(name: str) -> str:
+        return re.sub(r"\s+[0-9a-fA-F\-]{8,}$", "", name).strip()
+
+    md_files = sorted(p for p in folder.rglob("*.md") if p.is_file())
     if not md_files:
-        # also try to look one level deeper
-        for sub in folder.iterdir():
-            if sub.is_dir():
-                md_files = list(sub.glob("*.md"))
-                if md_files:
-                    assets_folder = next((p for p in folder.iterdir() if p.is_dir()), None)
-                    return md_files[0], assets_folder
-        raise FileNotFoundError("No .md file found in Notion export (root or one level deeper).")
+        raise FileNotFoundError("No .md file found in extracted Notion export.")
+
     md_file = md_files[0]
-    assets_folder = next((p for p in folder.iterdir() if p.is_dir()), None)
+    parent = md_file.parent
+    stem = md_file.stem
+    plain_title = _title_without_uuid(stem)
+
+    candidate_dirs: list[Path] = []
+    exact_stem_dir = parent / stem
+    plain_title_dir = parent / plain_title
+    if exact_stem_dir.is_dir():
+        candidate_dirs.append(exact_stem_dir)
+    if plain_title_dir.is_dir() and plain_title_dir not in candidate_dirs:
+        candidate_dirs.append(plain_title_dir)
+
+    # Some exports include slight naming differences in the asset directory.
+    for sibling in sorted(parent.iterdir()):
+        if not sibling.is_dir():
+            continue
+        if sibling in candidate_dirs:
+            continue
+        if sibling.name.startswith(plain_title) or plain_title.startswith(sibling.name):
+            candidate_dirs.append(sibling)
+
+    assets_folder = candidate_dirs[0] if candidate_dirs else None
     return md_file, assets_folder
 
 

@@ -1,0 +1,87 @@
+{{- $headers := findRE "<h[1-6].*?>(.|\n])+?</h[1-6]>" .Content -}}
+{{- if ge (len $headers) 1 -}}
+{{- $outlineID := printf "post-reading-outline-%s" .File.UniqueID -}}
+<div class="post-reading-sidebar" role="complementary" aria-label="On page outline">
+  <!-- <p class="post-reading-label">On this page</p> -->
+  <p class="post-reading-current">{{ .Title }}</p>
+  <nav id="{{ $outlineID }}" class="post-reading-outline">
+    {{- .TableOfContents -}}
+  </nav>
+</div>
+<script>
+  (() => {
+    const toc = document.getElementById("{{ $outlineID }}");
+    if (!toc) {
+      return;
+    }
+
+    const links = [...toc.querySelectorAll("a[href^='#']")];
+    if (!links.length) {
+      return;
+    }
+
+    const idFromHash = (hash) => decodeURIComponent(hash.slice(1));
+    const sections = links
+      .map((link) => {
+        const id = idFromHash(link.getAttribute("href") || "");
+        return id ? document.getElementById(id) : null;
+      })
+      .filter(Boolean);
+
+    if (!sections.length) {
+      return;
+    }
+
+    let activeId = "";
+    const setActive = (id) => {
+      if (!id || id === activeId) {
+        return;
+      }
+      activeId = id;
+      for (const link of links) {
+        const match = idFromHash(link.getAttribute("href") || "") === id;
+        link.classList.toggle("is-active", match);
+      }
+    };
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const visible = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+          if (visible[0]?.target?.id) {
+            setActive(visible[0].target.id);
+          }
+        },
+        {
+          rootMargin: "-18% 0px -66% 0px",
+          threshold: [0, 1],
+        }
+      );
+      for (const section of sections) {
+        observer.observe(section);
+      }
+    }
+
+    const findCurrentSection = () => {
+      const targetLine = window.scrollY + window.innerHeight * 0.24;
+      let current = sections[0];
+      for (const section of sections) {
+        if (section.offsetTop <= targetLine) {
+          current = section;
+        } else {
+          break;
+        }
+      }
+      if (current?.id) {
+        setActive(current.id);
+      }
+    };
+
+    window.addEventListener("scroll", findCurrentSection, { passive: true });
+    window.addEventListener("resize", findCurrentSection);
+    findCurrentSection();
+  })();
+</script>
+{{- end -}}
