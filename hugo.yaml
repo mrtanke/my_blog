@@ -1,6 +1,6 @@
 baseURL: https://mrtanke.github.io/
 languageCode: en-us
-title: R:Log
+title: Tan Ke
 theme: ["PaperMod"]
 
 # Only enable tags taxonomy. This prevents Hugo from generating category archive pages.
@@ -52,7 +52,7 @@ params:
   homeInfoParams:
     Title: "Tan Ke"
     Content: >
-      I'm a second-year Data and Computer Science Master student at [Heidelberg University,](https://www.uni-heidelberg.de/) supervised by [Sara.](https://scholar.google.de/citations?user=_uZR6pEAAAAJ&hl=de)
+      I'm a second-year Data and Computer Science Master student at [Heidelberg University,](https://www.uni-heidelberg.de/) supervised by [Jürgen Hesser.](https://www.umm.uni-heidelberg.de/miism/data-analysis-and-modeling-in-medicine/)
       Since 2025, I have been documenting my studying and research notes on this blog.
       I am broadly interested in Robotics, with a current focus on world models.
       
