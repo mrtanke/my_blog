@@ -16,6 +16,8 @@ I'm **Tan Ke**, a second-year Data and Computer Science Master student at [Heide
 
 I am looking for master thesis opportunities in embodied intelligence, Vision-Language-Action (VLA) models, and world models. If you are interested in collaboration or have relevant opportunities to share, please feel free to reach out by [email.](mailto:mrtanke2024@gmail.com)
 
+📑 <a href="/Tan_Ke_CV.pdf" target="_blank" rel="noopener">My CV</a> *(last updated: Mar 2026)*
+
 ---
 
 ## Education
