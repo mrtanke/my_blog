@@ -149,6 +149,11 @@
                     <span{{- if strings.HasPrefix $rp "/tags/" }} class="active"{{- end }}>Tags</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ "/about/" | absLangURL }}" title="About">
+                    <span{{- if strings.HasPrefix $rp "/about/" }} class="active"{{- end }}>About</span>
+                </a>
+            </li>
         </ul>
     </nav>
 </header>
