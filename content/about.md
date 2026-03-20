@@ -40,7 +40,7 @@ Ranked in the top 5% of the class. Final-year project: *Macau Peninsula Route Pl
 Worked on AI-powered education products, including an LLM-driven platform for teaching-material conversion through a multi-stage prompt workflow. \
 Designed a LangChain-based RAG learning assistant, which was deployed at university scale and served over 5,000 students.
 
-**Data Management and Quality Control Intern** — *Yonyou Network Technology* (Apr 2023 - Jun 2023)
+**Data Quality Intern** — *Yonyou Network Technology* (Apr 2023 - Jun 2023)
 
 Supported ERP data migration and quality control by validating over one million records in SQL.
 Improved workflow efficiency by automating batch record generation with Python scripts.
@@ -55,15 +55,15 @@ A representation study on latent world models, analyzing how different visual en
 
 **Light Field Disparity Estimation**
 
-An ongoing light-field vision project exploring Distg-style disparity estimation. I am reproducing the original pipeline, analyzing its feature and cost-volume design, and testing an edge-guided residual refinement module to study how architectural changes improves disparity estimation quality.
+An ongoing light-field vision project exploring Distg-style disparity estimation. I am reproducing the original pipeline, analyzing its feature and cost-volume design, and testing an edge-guided residual refinement module to study how architectural changes improve disparity estimation quality.
 
 **Robotics Transformer (RT-1) Reproduction**
 
-A PyTorch reimplementation of RT-1 built to understand the full vision-to-action pipeline, including action tokenization, model structure, and behavioral cloning training. This project was documented to [notes](https://mrtanke.github.io/projects/2026-01-10-reproducing-robotics-transformer-1/) as a public technical reproduction.
+A PyTorch reimplementation of RT-1 built to understand the full vision-to-action pipeline, including action tokenization, model structure, and behavioral cloning training. This project was documented in [public notes](https://mrtanke.github.io/projects/2026-01-10-reproducing-robotics-transformer-1/) as a public technical reproduction.
 
 **Diffusion Policy Reproduction**
 
-A hands-on reproduction of Diffusion Policy for visuomotor control, covering the full workflow from paper reading to implementation, training, and sampling. The project was organized as a reproducible codebase with [technical notes](https://mrtanke.github.io/projects/2026-01-02-reproducing-diffusion-policy/).
+A hands-on reproduction of Diffusion Policy for visuomotor control, covering the full workflow from paper reading to implementation, training, and sampling. The project was organized as a reproducible codebase with [technical notes.](https://mrtanke.github.io/projects/2026-01-02-reproducing-diffusion-policy/)
 
 **RL Algorithm Implementation (PPO and SAC)**
 
@@ -71,7 +71,7 @@ Personal implementations of Proximal Policy Optimization and Soft Actor-Critic t
 
 **RagFlow**
 
-A modular FastAPI backend for Retrieval-Augmented Generation applications — a project containing practical LLM systems, retrieval pipelines, and deployable AI services.
+A modular FastAPI backend for Retrieval-Augmented Generation applications — a project combining practical LLM systems, retrieval pipelines, and deployable AI services.
 
 **ROS2 Basics**
 
@@ -92,7 +92,7 @@ A full-stack project for intelligent tourism route planning in Macau with Python
 
 ## Languages
 
-🇬🇧 English (Fluent) 🇨🇳 Chinese (Native)
+🇬🇧 English (Fluent) · 🇨🇳 Chinese (Native)
 
 ---
 
