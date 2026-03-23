@@ -107,6 +107,10 @@ params:
   #     keys: ["title", "permalink", "summary", "content"]
 
 markup:
+  tableOfContents:
+    startLevel: 1
+    endLevel: 6
+    ordered: false
   goldmark:
     renderer:
       unsafe: true

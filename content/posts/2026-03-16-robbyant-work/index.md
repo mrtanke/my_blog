@@ -61,7 +61,7 @@ How to turn unreliable real-world depth sensing into robust, dense, pixel-aligne
 
 </aside>
 
-### **Model Details**
+### Model Details
 
 **Architecture.**
 

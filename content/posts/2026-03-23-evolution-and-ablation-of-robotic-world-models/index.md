@@ -411,8 +411,8 @@ $$
 
 ### Training Pipeline - Repo version
 
-- **Input:** training uses trajectory windows of length $H+\text{num\_pred}$
-    - in the default setup, $\text{num\_pred}=1$, so each sample contains:
+- **Input:** training uses trajectory windows of length $H+\text{num\\_pred}$
+    - in the default setup, $\text{num\\_pred}=1$, so each sample contains:
     
     $$
     o_{t:t+H} ,\quad a_{t:t+H},\quad p_{t:t+H}
@@ -472,7 +472,7 @@ $$
     - proprio state is projected to a **10-dimensional embedding**
     
     $$
-    p_t \in \mathbb{R}^{\text{prop\_dim}}
+    p_t \in \mathbb{R}^{\text{prop\\_dim}}
     \rightarrow
     e(p_t)\in\mathbb{R}^{10}
     $$
@@ -480,9 +480,9 @@ $$
     - over the whole window:
     
     $$
-    p_{t:t+H}\in\mathbb{R}^{(H+1)\times \text{prop\_dim}}
+    p_{t:t+H}\in\mathbb{R}^{(H+1)\times \text{prop\\_dim}}
     \rightarrow
-    e(p_{t:t+H})\in\mathbb{R}^{(H+1)\times10}
+    e(p\_{t:t+H})\in\mathbb{R}^{(H+1)\times10}
     $$
     
 - **Action encoder**
@@ -819,7 +819,7 @@ $$
     $$
     
     - unlike classical MPC that executes only the first action, this repo executes a **chunk** of planned actions before replanning
-    - specifically, it executes $\text{goal\_H} \times \text{frameskip}$ low-level environment steps forward
+    - specifically, it executes $\text{goal\\_H} \times \text{frameskip}$ low-level environment steps forward
         - take the first **goal_H** planner steps from the best sequence
         - each planner-step action is then unpacked into **frameskip** low-level environment actions for actual execution
 - **Observe again and replan**
@@ -829,7 +829,7 @@ $$
     - run CEM again from the new real state
 
 $$
-\text{plan} \rightarrow \text{execute goal\_H planner steps, frameskip steps each} \rightarrow \text{observe last real frame} \rightarrow \text{replan}
+\text{plan} \rightarrow \text{execute goal\\_H planner steps, frameskip steps each} \rightarrow \text{observe last real frame} \rightarrow \text{replan}
 $$
 
 ssh ktan[@medphys423.medma.ad.uni-heidelberg.de](mailto:ACCOUNT@HOST.medma.ad.uni-heidelberg.de) -p 49200
@@ -968,10 +968,10 @@ This project investigates **which visual representation makes an action-conditio
 
 The compared representations are:
 
-- [**DINOv2](https://arxiv.org/abs/2304.07193) patch tokens** *(baseline).* The original DINO-WM representation; strong because it preserves both **semantic information** and **spatial patch structure**.
-- [**V-JEPA 2](https://arxiv.org/abs/2506.09985), a** predictive self-supervised representation designed for **understanding, prediction, and planning in the physical world**.
+- [**DINOv2**](https://arxiv.org/abs/2304.07193) patch tokens *(baseline).* The original DINO-WM representation; strong because it preserves both **semantic information** and **spatial patch structure**.
+- [**V-JEPA 2**](https://arxiv.org/abs/2506.09985), a predictive self-supervised representation designed for **understanding, prediction, and planning in the physical world**.
 - [**DINOv3**](https://arxiv.org/abs/2508.10104), a newer generation of DINO representation with improved **dense feature quality** and stronger scaling behavior, making it a promising replacement for DINOv2 in patch-based world modeling.
-- [**DINO-Tok](https://arxiv.org/abs/2511.20565),** a DINO-based tokenizer that aims to preserve both **semantic abstraction** and **recoverable visual detail**.
+- [**DINO-Tok**](https://arxiv.org/abs/2511.20565), a DINO-based tokenizer that aims to preserve both **semantic abstraction** and **recoverable visual detail**.
 - [**VFM-VAE**](https://arxiv.org/abs/2510.18457), an autoencoder-style latent built on frozen vision foundation model features, included to test whether a more **generative and reconstructive latent space** can compete with planning-oriented semantic features.
 
 The goal is to understand whether DINO-WM’s performance comes mainly from:
@@ -988,7 +988,7 @@ My hypothesis is:
 - **DINOv2 patch tokens** will remain a very strong baseline because they provide both semantics and spatial structure.
 - **V-JEPA 2** may outperform DINOv2 if predictive pretraining yields a more planning-friendly latent.
 - **DINOv3** may improve over DINOv2 because of stronger and more stable dense features.
-- **DINO-Tok** may offer a good tradeoff between semantic quality and latent structure.
+- **DINO\-Tok** may offer a good tradeoff between semantic quality and latent structure.
 - **VFM-VAE** may reconstruct observations better, but may be less directly aligned with long-horizon planning unless its latent space also preserves control-relevant structure.
 
 A compact project version would be:

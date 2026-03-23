@@ -106,7 +106,7 @@ AutoML-Zero frames the problem as searching over entire learning algorithms, emp
 
 Within this landscape, BANANAS is best viewed not as a single trick but as a system-level recipe for BO in NAS: it asks which representation, predictor, and acquisition design choices actually matter most when budgets are tight and architectures are discrete.
 
-## **BANANAS: Bayesian Optimization with Neural Architectures for Neural Architecture Search**
+## BANANAS: Bayesian Optimization with Neural Architectures for Neural Architecture Search
 
 ### Problem setting: NAS under limited evaluation budget
 

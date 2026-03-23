@@ -138,7 +138,7 @@ Training is explicitly split into **pre-training** and **post-training**.
 
 **Post-training** then fine-tunes on **smaller, higher-quality data** to learn **fluent and reliable** execution strategies for downstream tasks. 
 
-# **FAST: Efficient Robot Action Tokenization**
+# FAST: Efficient Robot Action Tokenization
 
 <aside>
 
