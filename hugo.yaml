@@ -45,8 +45,7 @@ params:
   ShowPageNums: true
   ShowToc: true
   hideFooter: false
-  footer:
-    text: "Learn from [Lil’Log](https://lilianweng.github.io/)"
+  # footer:
   # comments: false
 
   homeInfoParams:

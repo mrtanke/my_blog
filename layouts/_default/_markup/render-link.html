@@ -9,7 +9,4 @@
   (hasPrefix $destination (printf "%s/" $baseURLNoScheme))
 -}}
 {{- $isExternal := and $isAbsolute (not $isInternalAbsolute) -}}
-<a href="{{ $destination | safeURL }}"
-  {{- with .Title }} title="{{ . }}"{{ end -}}
-  {{- if $isExternal }} target="_blank" rel="noopener noreferrer"{{ end -}}
->{{ .Text | safeHTML }}</a>
+<a href="{{ $destination | safeURL }}"{{- with .Title }} title="{{ . }}"{{ end -}}{{- if $isExternal }} target="_blank" rel="noopener noreferrer"{{ end -}}>{{- .Text | strings.TrimSpace | safeHTML -}}</a>{{- "" -}}

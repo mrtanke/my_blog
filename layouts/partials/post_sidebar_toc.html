@@ -21,6 +21,59 @@
     }
 
     const idFromHash = (hash) => decodeURIComponent(hash.slice(1));
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const getHeaderOffset = () => {
+      const raw = getComputedStyle(document.documentElement).getPropertyValue("--header-height");
+      const parsed = parseFloat(raw);
+      return Number.isFinite(parsed) ? parsed : 60;
+    };
+    const getAnchorOffset = () => getHeaderOffset() + 16;
+    let correctionTimer = null;
+    const clearPendingCorrection = () => {
+      if (correctionTimer !== null) {
+        window.clearTimeout(correctionTimer);
+        correctionTimer = null;
+      }
+    };
+    const alignSectionNow = (id, behavior = "auto") => {
+      const section = document.getElementById(id);
+      if (!section) {
+        return false;
+      }
+      const delta = section.getBoundingClientRect().top - getAnchorOffset();
+      if (Math.abs(delta) > 4) {
+        window.scrollBy({ top: delta, behavior });
+      }
+      return true;
+    };
+    const scheduleAlignmentCorrections = (id) => {
+      clearPendingCorrection();
+      correctionTimer = window.setTimeout(() => {
+        const section = document.getElementById(id);
+        if (!section) {
+          return;
+        }
+        const delta = section.getBoundingClientRect().top - getAnchorOffset();
+        if (Math.abs(delta) <= 6) {
+          return;
+        }
+        const settleBehavior = prefersReducedMotion ? "auto" : Math.abs(delta) > 72 ? "smooth" : "auto";
+        alignSectionNow(id, settleBehavior);
+      }, 320);
+    };
+    const scrollToSection = (id, behavior) => {
+      const section = document.getElementById(id);
+      if (!section) {
+        return false;
+      }
+      section.scrollIntoView({
+        behavior,
+        block: "start",
+        inline: "nearest",
+      });
+      scheduleAlignmentCorrections(id);
+      return true;
+    };
     const sections = links
       .map((link) => {
         const id = idFromHash(link.getAttribute("href") || "");
@@ -45,6 +98,7 @@
     };
 
     if ("IntersectionObserver" in window) {
+      const topMargin = getHeaderOffset() + 16;
       const observer = new IntersectionObserver(
         (entries) => {
           const visible = entries
@@ -55,7 +109,7 @@
           }
         },
         {
-          rootMargin: "-18% 0px -66% 0px",
+          rootMargin: `-${topMargin}px 0px -65% 0px`,
           threshold: [0, 1],
         }
       );
@@ -64,8 +118,31 @@
       }
     }
 
+    for (const link of links) {
+      link.addEventListener("click", (event) => {
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+
+        const hash = link.getAttribute("href") || "";
+        const id = idFromHash(hash);
+        if (!id) {
+          return;
+        }
+
+        event.preventDefault();
+        const behavior = prefersReducedMotion ? "auto" : "smooth";
+        const moved = scrollToSection(id, behavior);
+        if (!moved) {
+          return;
+        }
+
+        setActive(id);
+        history.pushState(null, "", `#${encodeURIComponent(id)}`);
+      });
+    }
+
     const findCurrentSection = () => {
-      const targetLine = window.scrollY + window.innerHeight * 0.24;
+      const targetLine = window.scrollY + getHeaderOffset() + 20;
       let current = sections[0];
       for (const section of sections) {
         if (section.offsetTop <= targetLine) {
@@ -81,6 +158,25 @@
 
     window.addEventListener("scroll", findCurrentSection, { passive: true });
     window.addEventListener("resize", findCurrentSection);
+
+    if (window.location.hash) {
+      const id = idFromHash(window.location.hash);
+      if (id) {
+        const behavior = prefersReducedMotion ? "auto" : "smooth";
+        requestAnimationFrame(() => {
+          if (scrollToSection(id, behavior)) {
+            setActive(id);
+          }
+        });
+      }
+    }
+
+    window.addEventListener("load", () => {
+      if (activeId) {
+        alignSectionNow(activeId);
+      }
+    });
+
     findCurrentSection();
   })();
 </script>
