@@ -178,6 +178,52 @@ def fix_markdown_image_links(md_text: str) -> str:
     return protected
 
 
+def collapse_duplicate_image_captions(md_text: str) -> str:
+    """If image alt text is repeated on the next non-empty line, fold it into image title.
+
+    Example:
+    - ![Caption](img.png)\n\nCaption
+    becomes:
+    - ![Caption](img.png "Caption")
+    """
+
+    image_line = re.compile(r'^(\s*)!\[([^\]]*)\]\((\S+?)(?:\s+"([^"]*)")?\)\s*$')
+    lines = md_text.splitlines(keepends=True)
+    i = 0
+
+    while i < len(lines):
+        current = lines[i].rstrip('\r\n')
+        m = image_line.match(current)
+        if not m:
+            i += 1
+            continue
+
+        indent, alt, url, title = m.group(1), m.group(2).strip(), m.group(3), m.group(4)
+
+        if title:
+            i += 1
+            continue
+
+        j = i + 1
+        while j < len(lines) and lines[j].strip() == '':
+            j += 1
+
+        if j >= len(lines):
+            i += 1
+            continue
+
+        next_text = lines[j].strip()
+        if alt and next_text == alt:
+            line_ending = '\n' if lines[i].endswith('\n') else ''
+            safe_title = alt.replace('"', '\\"')
+            lines[i] = f'{indent}![{alt}]({url} "{safe_title}"){line_ending}'
+            del lines[j]
+
+        i += 1
+
+    return ''.join(lines)
+
+
 def create_hugo_bundle(
     md_file: Path,
     assets_folder: Path,
@@ -234,10 +280,11 @@ def create_hugo_bundle(
 
     md_text = ''.join(lines)
     md_text = fix_markdown_image_links(md_text)
+    md_text = collapse_duplicate_image_captions(md_text)
 
     # 4) write index.md with front matter
-    # prepare title from slug (replace hyphens with spaces)
-    title = slug.replace('-', ' ')
+    # prepare title from slug (replace hyphens with spaces) and normalize to title case
+    title = slug.replace('-', ' ').title()
     # if no description provided, default to 'Paper-reading notes: {title}'
     if description and description.strip():
         final_desc = description.strip()

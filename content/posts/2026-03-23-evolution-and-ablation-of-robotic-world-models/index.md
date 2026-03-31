@@ -9,7 +9,7 @@ ShowReadingTime: false
 tags:
   - embodied-intelligence
   - robotics
-  - world-models
+  - world-model
 ---
 
 

@@ -64,6 +64,82 @@ body {
   color: #e0b000;
 }
 
+/* Article rhythm closer to lilianweng style */
+.post-content {
+  line-height: 1.8;
+}
+
+.post-content p {
+  margin: 1rem 0;
+}
+
+/* Ordered list markers: level 1 numeric, level 2 alphabetic */
+.post-content ol {
+  list-style-type: decimal;
+}
+
+.post-content ol ol {
+  list-style-type: lower-alpha;
+}
+
+/* Figure captions styled like lilianweng.github.io posts */
+.post-content {
+  counter-reset: figure-counter;
+}
+
+.post-content figure {
+  counter-increment: figure-counter;
+}
+
+.post-content figure > figcaption::before {
+  content: "Figure " counter(figure-counter) ": ";
+}
+
+.post-content figure > figcaption,
+.post-content figure > figcaption a {
+  text-align: center;
+  width: 75%;
+  margin: 10px auto 35px;
+  line-height: 1.35;
+  color: #888888;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.post-content figure > figcaption > p {
+  color: #888888;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+/* Captions generated as italic paragraph right after image */
+.post-content p > img + br + em,
+.post-content p > em:only-child {
+  display: block;
+  text-align: center;
+  font-size: 0.92rem;
+  color: #6b7280;
+  margin-top: -0.2rem;
+  margin-bottom: 1.4rem;
+}
+
+.dark .post-content p > img + br + em,
+.dark .post-content p > em:only-child {
+  color: #9aa5b2;
+}
+
+/* Keep math blocks readable and horizontally scrollable on small viewports */
+.post-content .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.1rem 0;
+  margin: 1.2rem 0;
+}
+
+.post-content .katex {
+  font-size: 1.03em;
+}
+
 /* Home hero: place intro copy and selfie in a left-right layout */
 .home-info .home-info-has-image {
   display: grid;
