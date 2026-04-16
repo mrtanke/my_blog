@@ -74,4 +74,32 @@
   {{- end }}
 </article>
 
+<script>
+  (() => {
+    if (window.location.hash) {
+      return;
+    }
+
+    const scrollToTop = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    };
+
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+
+    if (document.readyState === "complete") {
+      scrollToTop();
+    } else {
+      window.addEventListener("load", scrollToTop, { once: true });
+    }
+
+    window.addEventListener("pageshow", (event) => {
+      if (!window.location.hash && event.persisted) {
+        scrollToTop();
+      }
+    });
+  })();
+</script>
+
 {{- end }}{{/* end main */}}

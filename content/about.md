@@ -12,15 +12,17 @@ comments: false
 ---
 
 
-I'm **Tan Ke**, a second-year Data and Computer Science Master student at [Heidelberg University,](https://www.uni-heidelberg.de/) supervised by [Sara Monji Azad.](https://scholar.google.com/citations?user=_uZR6pEAAAAJ&hl=en) Since 2025, I have been documenting my studying and research notes on this blog. I am broadly interested in Robotics, with a current focus on world models.
+I'm **Tan Ke**, a second-year Data and Computer Science Master student at [Heidelberg University](https://www.uni-heidelberg.de/), supervised by [Sara Monji Azad](https://scholar.google.com/citations?user=_uZR6pEAAAAJ&hl=en). Since 2025, I have been documenting my studying and research notes on this blog. I am broadly interested in Robotics, with a current focus on world models.
 
-I am looking for master thesis opportunities in embodied intelligence, Vision-Language-Action (VLA) models, and world models. If you are interested in collaboration or have relevant opportunities to share, please feel free to reach out by [email.](mailto:mrtanke2024@gmail.com)
+I am looking for master thesis opportunities in embodied intelligence, Vision-Language-Action (VLA) models, and world models. If you are interested in collaboration or have relevant opportunities to share, please feel free to reach out by [email](mailto:mrtanke2024@gmail.com).
 
 **On-site availability**: Available to commute to the office weekly\
-**Start date**: Ready to start now for a working-student role; available from August 2026 for a Master’s thesis\
+**Start date**: Ready to start now for a working-student and internship role; available from August 2026 for a Master’s thesis\
 **Expected graduation**: April 2027
 
 📑 <a href="/Tan_Ke_CV.pdf" target="_blank" rel="noopener">My CV</a> *(last updated: Mar 2026)*
+|
+✉️ <a href="/Ke_Recommendation_letter.pdf" target="_blank" rel="noopener">Letter of Recommendation</a> (by [Sara Monji Azad](https://scholar.google.com/citations?user=_uZR6pEAAAAJ&hl=en))
 
 ---
 
@@ -35,7 +37,7 @@ Relevant coursework includes Generative Neural Networks, Computer Vision, Reason
 
 **B.Sc. in Computer Science** - *Macau University of Science and Technology* (Sep 2020 - Jun 2024)
 
-Ranked in the top 5% of the class. Final-year project: *Macau Peninsula Route Planning System*.
+Ranked in the top 5% of the class. Final-year project: Macau Peninsula Route Planning System.
 
 ---
 
@@ -69,7 +71,7 @@ A PyTorch reimplementation of RT-1 built to understand the full vision-to-action
 
 **Diffusion Policy Reproduction**
 
-A hands-on reproduction of Diffusion Policy for visuomotor control, covering the full workflow from paper reading to implementation, training, and sampling. The project was organized as a reproducible codebase with [technical notes.](https://mrtanke.github.io/projects/2026-01-02-reproducing-diffusion-policy/)
+A hands-on reproduction of Diffusion Policy for visuomotor control, covering the full workflow from paper reading to implementation, training, and sampling. The project was organized as a reproducible codebase with [technical notes](https://mrtanke.github.io/projects/2026-01-02-reproducing-diffusion-policy/).
 
 **RL Algorithm Implementation (PPO and SAC)**
 
