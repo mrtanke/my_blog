@@ -85,7 +85,7 @@ Qualitatively, the model produces **stable viewpoint transitions** while preserv
 
 On the efficiency side, the project reports **interactive frame rates on a single RTX 4090**, and the paper emphasizes support for **consumer-grade GPUs** rather than only high-end datacenter hardware. This is an important result because the method is designed not only for visual quality, but also for practical real-time deployment.
 
-## Discussion and Conclusions
+## Conclusions
 
 InSpatio-WorldFM shows that a frame-based design can support real-time spatial inference with strong view consistency. However, **dynamic scene modeling**, **motion range**, and **temporal stability** are still limited. 
 

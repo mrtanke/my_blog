@@ -3,11 +3,11 @@ title: 'Reinforcement Learning'
 date: 2026-04-19T21:47:41+00:00
 draft: true
 description: ''
-tag: 'Posts'
+tag: 
 ShowWordCount: true
 ShowReadingTime: false
 tags:
-  - 'Posts'
+  - 'reinforcement-learning'
 ---
 
 
@@ -256,8 +256,6 @@ Methods example:
 - SAC
 
 # References
-
-## References
 
 [1] “Reinforcement learning,” Wikipedia. [Online]. Available: [https://en.wikipedia.org/wiki/Reinforcement_learning](https://en.wikipedia.org/wiki/Reinforcement_learning)
 
