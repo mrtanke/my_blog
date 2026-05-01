@@ -1,8 +1,8 @@
 ---
-title: 'Multiobjective Tree-Structured Parzen Estimator'
+title: 'MOTPE'
 date: 2025-12-11T13:41:18+00:00
 draft: false
-description: 'Paper-reading notes: MOTPE'
+description: 'Paper Reading Notes: "MOTPE: Multiobjective Tree-Structured Parzen Estimator"'
 tag: 'Posts'
 ShowWordCount: true
 ShowReadingTime: false

@@ -1,8 +1,8 @@
 ---
-title: 'Reformer: The Efficient Transformer'
+title: 'Reformer'
 date: 2025-12-14 08:39:11+00:00
 draft: false
-description: 'Paper-reading notes: Reformer'
+description: 'Paper Reading Notes: "Reformer: The Efficient Transformer"'
 ShowWordCount: true
 ShowReadingTime: false
 tags:

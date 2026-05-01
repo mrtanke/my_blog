@@ -1,8 +1,8 @@
 ---
-title: 'Synthesizer: Rethinking Self-Attention for Transformer Models'
+title: 'Synthesizer'
 date: 2025-12-16 08:40:53+00:00
 draft: false
-description: 'Paper-reading notes: Synthesizer'
+description: 'Paper Reading Notes: "Synthesizer: Rethinking Self-Attention for Transformer Models"'
 ShowWordCount: true
 ShowReadingTime: false
 tags:

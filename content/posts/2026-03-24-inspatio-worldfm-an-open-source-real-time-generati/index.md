@@ -1,8 +1,8 @@
 ---
-title: 'InSpatio-WorldFM: An Open-Source Real-Time Generative Frame Model'
+title: 'InSpatio-WorldFM'
 date: 2026-03-24T00:09:11+00:00
 InSpatio-WorldFM is a **conditional novel-view synthesis** model built around a Diffusion Transformer ([DiT](https://arxiv.org/abs/2212.09748)). Instead of autoregressively generating a video, it takes:
-description: 'Paper-reading notes: InSpatio-WorldFM'
+description: 'Paper Reading Notes: "InSpatio-WorldFM" An Open-Source Real-Time Generative Frame Model"'
 tag: 'Posts'
 ShowWordCount: true
 ShowReadingTime: false

@@ -2,7 +2,7 @@
 title: Learning Transformer Programs
 date: 2025-12-15 08:38:28+00:00
 draft: false
-description: 'Paper-reading notes: Learning Transformer Programs'
+description: 'Paper Reading Notes: "Learning Transformer Programs"'
 ShowWordCount: true
 ShowReadingTime: false
 tags:

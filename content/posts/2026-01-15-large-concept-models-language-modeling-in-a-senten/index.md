@@ -1,8 +1,8 @@
 ---
-title: 'Large Concept Models: Language Modeling in a Sentence Representation Space'
+title: 'Large Concept Models'
 date: 2026-01-15T14:54:13+00:00
 draft: false
-description: 'Paper-reading notes: Large Concept Models: Language Modeling in a Sentence Representation Space'
+description: 'Paper Reading Notes: "Large Concept Models: Language Modeling in a Sentence Representation Space"'
 ShowWordCount: true
 ShowReadingTime: false
 tags:

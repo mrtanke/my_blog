@@ -1,8 +1,8 @@
 ---
-title: 'OpenVLA: An Open-Source Vision-Language-Action Model'
+title: 'OpenVLA'
 date: 2025-12-12 08:37:15+00:00
 draft: false
-description: 'Paper-reading notes: OpenVLA'
+description: 'Paper Reading Notes: "OpenVLA: An Open-Source Vision-Language-Action Model"'
 ShowWordCount: true
 ShowReadingTime: false
 tags:

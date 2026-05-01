@@ -2,7 +2,7 @@
 title: 'RT Series (RT-1, RT-2)'
 date: 2026-01-09T09:23:14+00:00
 draft: false
-description: 'Paper-reading notes: RT-1 and RT-2'
+description: 'Paper Reading Notes: "RT-1: Robotics Transformer for Real-World Control at Scale" and "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control"'
 ShowWordCount: true
 ShowReadingTime: false
 tags:

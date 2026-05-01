@@ -1,9 +1,8 @@
 ---
-title: 'BANANAS: Bayesian Optimization with Neural Architectures for Neural
-Architecture Search'
+title: 'BANANAS'
 date: 2026-02-05T15:31:54+00:00
 draft: false
-description: 'Paper-reading notes: BANANAS'
+description: 'Paper Reading Notes: "BANANAS: Bayesian Optimization with Neural Architectures for Neural Architecture Search"'
 tag: 'Posts'
 ShowWordCount: true
 ShowReadingTime: false

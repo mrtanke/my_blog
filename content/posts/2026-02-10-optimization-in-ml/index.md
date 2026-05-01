@@ -1,5 +1,5 @@
 ---
-title: 'Optimization in Machine Learning'
+title: 'Seminar Summary of "Optimization in Machine Learning"'
 date: 2026-02-10T16:03:54+00:00
 draft: false
 description: 'The summary of the seminar "Optimization in Machine Learning", covering Bayesian Optimization, multi-fidelity methods, handling discrete search spaces, and the BANANAS method for NAS.'

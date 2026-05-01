@@ -1,8 +1,8 @@
 ---
-title: 'UrbanLF: A Comprehensive Light Field Dataset for Semantic Segmentation of Urban Scenes'
+title: 'UrbanLF'
 date: 2026-01-17T15:06:44+00:00
 draft: false
-description: 'Paper-reading notes: UrbanLF'
+description: 'Paper Reading Notes: "UrbanLF: A Comprehensive Light Field Dataset for Semantic Segmentation of Urban Scenes"'
 ShowWordCount: true
 ShowReadingTime: false
 tags:

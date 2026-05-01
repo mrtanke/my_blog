@@ -1,8 +1,8 @@
 ---
-title: 'Scenestreamer: Continuous Scenario Generation As Next Token Group Prediction'
+title: 'Scenestreamer'
 date: 2026-03-31T13:43:43+00:00
 draft: false
-description: 'Paper-reading notes: Scenestreamer Continuous Scenario Generation As Next Token Group Prediction'
+description: 'Paper Reading Notes: "Scenestreamer: Continuous Scenario Generation As Next Token Group Prediction"'
 tag: 'Posts'
 ShowWordCount: true
 ShowReadingTime: false

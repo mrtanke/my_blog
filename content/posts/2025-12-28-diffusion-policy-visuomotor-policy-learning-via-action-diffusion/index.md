@@ -1,8 +1,8 @@
 ---
-title: 'Diffusion Policy: Visuomotor Policy Learning via Action Diffusion'
+title: 'Diffusion Policy'
 date: 2025-12-28 15:32:18+00:00
 draft: false
-description: 'Paper-reading notes: Diffusion Policy'
+description: 'Paper Reading Notes: "Diffusion Policy: Visuomotor Policy Learning via Action Diffusion"'
 ShowWordCount: true
 ShowReadingTime: false
 tags:

@@ -1,5 +1,5 @@
 ---
-title: 'Math-Shepherd: Verify and Reinforce LLMs Step-by-step without Human Annotations'
+title: 'Math-Shepherd'
 date: 2026-05-01T10:11:25+00:00
 draft: false
 description: ''
@@ -15,6 +15,8 @@ tags:
 This is the talk and presentation I’ve given during seminar "Process Reward Modeling in LLMs" at the University of Heidelberg.
 
 It involves a presentation and a short academic discussions, the content is about paper sharing, experiments, and reproduction results with classmates and professors.
+
+The paper name is "Math-Shepherd: Verify and Reinforce LLMs Step-by-Step without Human Annotations" ([Wang et al., 2024](https://arxiv.org/abs/2312.08935)).
 
 You could find the paper and slide here:
 

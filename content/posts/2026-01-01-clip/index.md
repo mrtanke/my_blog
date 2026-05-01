@@ -1,8 +1,8 @@
 ---
-title: 'Learning Transferable Visual Models From Natural Language Supervision'
+title: 'CLIP'
 date: 2026-01-01T13:27:53+00:00
 draft: false
-description: 'Paper-reading notes: CLIP'
+description: 'Paper Reading Notes: "Learning Transferable Visual Models From Natural Language Supervision"'
 tag: 'Posts'
 ShowWordCount: true
 ShowReadingTime: false

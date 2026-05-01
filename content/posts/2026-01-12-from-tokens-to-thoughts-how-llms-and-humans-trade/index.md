@@ -2,7 +2,7 @@
 title: 'From Tokens To Thoughts: How LLMs And Humans Trade Compression For Meaning'
 date: 2026-01-12T14:49:45+00:00
 draft: false
-description: 'Paper-reading notes: From Tokens To Thoughts: How LLMs And Humans Trade Compression For Meaning'
+description: 'Paper Reading Notes: "From Tokens To Thoughts: How LLMs And Humans Trade Compression For Meaning"'
 ShowWordCount: true
 ShowReadingTime: false
 tags:
