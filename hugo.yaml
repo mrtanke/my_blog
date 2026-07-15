@@ -51,13 +51,12 @@ params:
   homeInfoParams:
     Title: "Tan Ke"
     Content: >
-      I'm a second-year Data and Computer Science Master student at [Heidelberg University,](https://www.uni-heidelberg.de/) supervised by [Sara Monji Azad.](https://scholar.google.com/citations?user=_uZR6pEAAAAJ&hl=en)
+      I'm a second-year Data and Computer Science Master student at [Heidelberg University](https://www.uni-heidelberg.de/).
       Since 2025, I have been documenting my studying and research notes on this blog.
-      I am broadly interested in Robotics, with a current focus on world models.
+      I am broadly interested in embodied intelligence, with a current focus on vision-language-action (VLA) models and world models.
       
       - -
 
-      - I am looking for master thesis opportunities in embodied intelligence, Vision-Language-Action (VLA) models, and world models.
       If you are interested in collaboration or have relevant opportunities to share, please feel free to reach out by [email.](mailto:mrtanke2024@gmail.com)
 
     Image: "/selfie.png"

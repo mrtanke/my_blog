@@ -12,13 +12,13 @@ comments: false
 ---
 
 
-I'm **Tan Ke**, a second-year Data and Computer Science Master student at [Heidelberg University](https://www.uni-heidelberg.de/), supervised by [Sara Monji Azad](https://scholar.google.com/citations?user=_uZR6pEAAAAJ&hl=en). Since 2025, I have been documenting my studying and research notes on this blog. I am broadly interested in Robotics, with a current focus on world models.
+I'm **Tan Ke**, a second-year Data and Computer Science Master student at [Heidelberg University](https://www.uni-heidelberg.de/). Since 2025, I have been documenting my studying and research notes on this blog. I am broadly interested in embodied intelligence, with a current focus on vision-language-action (VLA) models and world models.
 
-I am looking for master thesis opportunities in embodied intelligence, Vision-Language-Action (VLA) models, and world models. If you are interested in collaboration or have relevant opportunities to share, please feel free to reach out by [email](mailto:mrtanke2024@gmail.com).
+If you are interested in collaboration or have relevant opportunities to share, please feel free to reach out by [email](mailto:mrtanke2024@gmail.com).
 
-**On-site availability**: Available to commute to the office weekly\
+<!-- **On-site availability**: Available to commute to the office weekly\
 **Start date**: Ready to start now for a working-student and internship role; available from August 2026 for a Master’s thesis\
-**Expected graduation**: April 2027
+**Expected graduation**: April 2027 -->
 
 📑 <a href="/Tan_Ke_CV.pdf" target="_blank" rel="noopener">My CV</a> *(last updated: Mar 2026)*
 |
@@ -94,7 +94,7 @@ A full-stack project for intelligent tourism route planning in Macau with Python
 ## Interests
 
 🤖 Robotics · Artificial Intelligence \
-🎵 Music · Basketball · Football · Fitness · Hiking · Blog Writing
+🎵 Music · Basketball · Football · Fitness · Hiking · Cooking
 
 ---
 

@@ -27,17 +27,14 @@
       const parsed = parseFloat(raw);
       return Number.isFinite(parsed) ? parsed : 60;
     };
-    const getAnchorOffset = () => getHeaderOffset() + 16;
-
     const scrollToSection = (id, behavior) => {
       const section = document.getElementById(id);
       if (!section) {
         return false;
       }
-      const top = section.getBoundingClientRect().top + window.scrollY - getAnchorOffset();
-      window.scrollTo({
-        top,
+      section.scrollIntoView({
         behavior,
+        block: "start",
       });
       return true;
     };
