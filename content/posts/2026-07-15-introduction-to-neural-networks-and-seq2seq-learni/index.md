@@ -1,5 +1,5 @@
 ---
-title: 'Introduction To Neural Networks and Seq2Seq Learning'
+title: 'Introduction to Neural Networks and Seq2Seq Learning'
 date: 2026-07-15T14:11:15+00:00
 draft: false
 description: ''
@@ -206,7 +206,7 @@ Language is sequential. The meaning of a token may depend on what appeared much 
 An RNN maintains a hidden state:
 
 $$
-\mathbf{h}_t = \sigma(\mathbf{x}_tW + \mathbf{h}_{t-1}U + \mathbf{b})
+\mathbf{h}_t = \sigma(\mathbf{x}_t W + \mathbf{h}\_{t-1} U + \mathbf{b})
 $$
 
 The current state depends on both the current input and the previous state. The same parameters are reused at every time step.
@@ -251,7 +251,7 @@ The forget gate controls what is retained from the old memory. The input gate co
 ![LSTM update equations](image_6.png "LSTM update equations")
 
 
-To be more specific, at time step $t$, the LSTM combines the current input $\mathbf{x}_t$ and previous hidden state $\mathbf{h}_{t-1}$ to compute the input, forget, and output gates, together with the candidate state $\mathbf{g}$. These values update the cell state $\mathbf{c}_t$, produce the hidden state $\mathbf{h}_t$, and generate the output $\mathbf{y}_t$.
+To be more specific, at time step $t$, the LSTM combines the current input $\mathbf{x}_t$ and previous hidden state $\mathbf{h}\_{t-1}$ to compute the input, forget, and output gates, together with the candidate state $\mathbf{g}$. These values update the cell state $\mathbf{c}_t$, produce the hidden state $\mathbf{h}_t$, and generate the output $\mathbf{y}_t$.
 
 The most important design choice is the additive memory update. Instead of repeatedly transforming the entire state through a non-linearity, which probably breakdown the gradient, information can travel through the cell state along a more direct path.
 
@@ -302,7 +302,7 @@ $$
 The context vector becomes a weighted sum:
 
 $$
-\mathbf{c}_t = \sum_i \alpha_{t,i}\mathbf{v}_i.
+\mathbf{c}_t = \sum_i \alpha\_{t,i} \mathbf{v}_i.
 $$
 
 This query-key-value view is more general than machine translation. It says:
