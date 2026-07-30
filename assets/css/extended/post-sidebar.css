@@ -1,4 +1,4 @@
-/* Reading layout with a minimal right-side outline sidebar */
+/* Substack-like reading outline: calm, left-edge, and out of the way */
 .post-single-with-sidebar {
   max-width: var(--main-width);
 }
@@ -22,44 +22,138 @@
 
 .post-reading-sidebar {
   position: fixed;
-  top: calc(var(--header-height) + 22px);
-  left: calc(50% + (var(--main-width) / 2) + 28px);
-  width: 220px;
-  max-height: calc(100vh - var(--header-height) - 32px);
-  padding-left: 14px;
-  border-left: 1px dotted rgba(120, 131, 144, 0.34);
+  top: calc(var(--header-height) + 18px);
+  left: 0;
+  width: 282px;
+  max-height: calc(100vh - var(--header-height) - 36px);
+  padding: 18px 18px 18px 22px;
+  border: 1px solid rgba(120, 131, 144, 0.16);
+  border-left: 0;
+  border-radius: 0 12px 12px 0;
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.075);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   z-index: 3;
 }
 
+.dark .post-reading-sidebar {
+  border-color: rgba(120, 131, 144, 0.22);
+  background: rgba(29, 30, 32, 0.96);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
+}
+
+@media (min-width: 1340px) {
+  .post-reading-sidebar {
+    transform: translateX(calc(-100% + 18px));
+    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease,
+      background-color 0.22s ease;
+    overflow: hidden;
+  }
+
+  .post-reading-sidebar:hover,
+  .post-reading-sidebar:focus-within {
+    transform: translateX(0);
+    border-color: rgba(120, 131, 144, 0.22);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.11);
+  }
+
+  .dark .post-reading-sidebar:hover,
+  .dark .post-reading-sidebar:focus-within {
+    border-color: rgba(127, 182, 255, 0.2);
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.34);
+  }
+
+  .post-reading-sidebar::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 18px;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(31, 111, 210, 0.13), rgba(31, 111, 210, 0.03));
+    border-left: 1px solid rgba(31, 111, 210, 0.1);
+    pointer-events: none;
+  }
+
+  .dark .post-reading-sidebar::before {
+    background: linear-gradient(180deg, rgba(127, 182, 255, 0.16), rgba(127, 182, 255, 0.04));
+    border-left-color: rgba(127, 182, 255, 0.12);
+  }
+
+  .post-reading-sidebar::after {
+    content: "Contents";
+    position: absolute;
+    top: 50%;
+    right: 4px;
+    transform: translateY(-50%) rotate(-90deg);
+    transform-origin: center;
+    color: #6b7280;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .dark .post-reading-sidebar::after {
+    color: #a4afbb;
+  }
+
+  .post-reading-sidebar:hover::before,
+  .post-reading-sidebar:focus-within::before,
+  .post-reading-sidebar:hover::after,
+  .post-reading-sidebar:focus-within::after {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .post-reading-sidebar {
+    transition: none;
+  }
+}
+
 .post-reading-label {
-  margin: 6px 0 8px;
-  font-size: 13px;
-  line-height: 1.25;
-  color: #5c6570;
-  font-weight: 600;
+  margin: 0 0 8px;
+  font-size: 12px;
+  line-height: 1.2;
+  color: #5d6773;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .dark .post-reading-label {
-  color: #9aa5b2;
+  color: #a4afbb;
 }
 
 .post-reading-current {
-  margin: 0 0 8px;
-  font-size: 18px;
-  line-height: 1.18;
+  margin: 0 0 14px;
+  padding-bottom: 13px;
+  border-bottom: 1px solid rgba(120, 131, 144, 0.14);
+  font-size: 13px;
+  line-height: 1.45;
   font-weight: 700;
-  color: #20252b;
-  letter-spacing: -0.01em;
+  color: #18212b;
+  letter-spacing: 0;
   display: -webkit-box;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
+.dark .post-reading-current {
+  border-bottom-color: rgba(120, 131, 144, 0.2);
+  color: #e8edf3;
+}
+
 .post-reading-outline {
-  max-height: calc(100vh - var(--header-height) - 110px);
+  max-height: calc(100vh - var(--header-height) - 124px);
   overflow: auto;
-  padding-right: 6px;
+  padding-right: 8px;
   scrollbar-width: thin;
 }
 
@@ -70,35 +164,34 @@
 }
 
 .post-reading-outline ul ul {
-  padding-left: 14px;
+  margin-top: 1px;
+  padding-left: 13px;
 }
 
 .post-reading-outline li {
-  margin: 0 0 2px;
+  margin: 0;
   padding: 0;
-  position: relative;
 }
 
 .post-reading-outline a {
   display: block;
   margin: 0;
-  padding: 4px 0 4px 12px;
+  padding: 5px 0 5px 13px;
   border-radius: 0;
-  font-size: 15px;
+  font-size: 13px;
   line-height: 1.38;
-  color: #6a727c;
+  color: #626c78;
   text-decoration: none;
   border-left: 2px solid transparent;
-  transition: color 0.2s ease, border-color 0.2s ease;
+  transition: color 0.18s ease, border-color 0.18s ease;
   display: -webkit-box;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .post-reading-outline a:hover {
-  color: #2d3742;
+  color: #202833;
 }
 
 .post-reading-outline a.is-active {
@@ -108,29 +201,29 @@
 }
 
 .dark .post-reading-outline a {
-  color: #9ca8b5;
+  color: #aab4bf;
 }
 
 .dark .post-reading-outline a:hover {
-  color: #d3dbe3;
+  color: #e2e8ef;
 }
 
 .dark .post-reading-outline a.is-active {
-  border-left-color: #7fb6ff;
-  color: #7fb6ff;
+  border-left-color: #8fc0ff;
+  color: #8fc0ff;
 }
 
 .post-reading-outline ul ul a {
-  font-size: 14px;
-  color: #74808d;
+  padding-left: 12px;
+  font-size: 12px;
+  color: #6c7683;
 }
 
-.post-reading-outline ul ul ul a {
-  font-size: 13px;
-  color: #7c8895;
+.dark .post-reading-outline ul ul a {
+  color: #98a4b1;
 }
 
-@media (max-width: 1220px) {
+@media (max-width: 1339px) {
   .post-single-with-sidebar {
     max-width: var(--main-width);
   }
@@ -141,34 +234,40 @@
     max-height: none;
     margin-top: 18px;
     left: auto;
-    padding-left: 0;
-    border-left: 0;
-  }
-
-  .post-reading-current {
-    font-size: 17px;
+    transform: none;
+    overflow: visible;
+    border: 1px solid rgba(120, 131, 144, 0.16);
+    border-radius: 12px;
   }
 
   .post-reading-outline {
     max-height: none;
   }
 
-  .post-reading-outline a {
-    font-size: 14px;
+  .post-reading-current {
+    font-size: 13px;
   }
 }
 
 @media (max-width: 768px) {
+  .post-reading-sidebar {
+    padding: 16px 15px;
+  }
+
   .post-reading-label {
     font-size: 11px;
   }
 
   .post-reading-current {
-    font-size: 16px;
+    font-size: 13px;
   }
 
   .post-reading-outline a {
-    padding: 5px 0 5px 10px;
+    padding: 5px 0 5px 11px;
     font-size: 12px;
+  }
+
+  .post-reading-outline ul ul a {
+    font-size: 11px;
   }
 }

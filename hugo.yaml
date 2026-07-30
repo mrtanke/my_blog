@@ -107,7 +107,7 @@ params:
 markup:
   tableOfContents:
     startLevel: 1
-    endLevel: 6
+    endLevel: 2
     ordered: false
   goldmark:
     renderer:

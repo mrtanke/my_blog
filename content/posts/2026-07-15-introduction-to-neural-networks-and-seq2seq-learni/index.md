@@ -23,7 +23,7 @@ So I would say that I already had some basic knowledge of machine learning, and 
 
 In this post, I summarize the structure of the course, the key ideas I learned, the questions I found challenging, and how the course reshaped my understanding of modern neural networks.
 
-## About the Course
+# About the Course
 
 A rough roadmap for this course is:
 
